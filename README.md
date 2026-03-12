@@ -1,15 +1,15 @@
 # BiteLocal - Local Restaurant Finder
 ## FBLA Coding & Programming 2025-2026
 **Topic:** Byte-Sized Business Boost
-**Made by:** [Your Name] & [Partner Name]
-**School:** [Your School Name]
+**Made by:** Vaishnavi Bommalata & Ashrita Ambhore
+**School:** Eastern high school
 
 ---
 
 ## What is BiteLocal?
 
 BiteLocal is a web app that helps people in Louisville, KY find local restaurants.
-You can browse by food type, search by name, read reviews, save favorites, and find
+You can browse by food type, search by name, writw read reviews, save favorites, and find
 special deals. We made it for FBLA Coding and Programming because we thought a
 restaurant finder was a good way to help boost small local businesses.
 
@@ -47,7 +47,7 @@ Go to: **http://127.0.0.1:5000**
 - **Search** — search by restaurant name, description, or location
 - **Filter by category** — American, Italian, Asian, Mexican, Desserts
 - **Sort** — sort by name (A-Z), top rated, or cheapest first
-- **Star ratings & reviews** — click stars to rate 1-5, write a comment, see all reviews
+- **Star ratings & reviews** — click stars to rate, write a comment, see all reviews
 - **Bookmarks** — save restaurants to a personal list using browser sessions
 - **Deals page** — every restaurant has a special deal and promo code you can claim
 - **Website links** — each restaurant links to their page so you can learn more
@@ -133,11 +133,10 @@ We validate all user input before saving it. We check both:
 - How to build a multi-page website with Flask
 - How to use Jinja2 templates to avoid repeating code
 - How Flask sessions work for storing user data like bookmarks
-- How to validate form input (syntactic vs semantic)
-- How to use CSS flexbox and grid for layouts
+- How to validate form input
+- How to use CSS and grid for layouts
 - How honeypot fields work for bot prevention
 - How to use Python dictionaries for fast lookups
 
 ---
-
 *Made for FBLA Coding & Programming 2025-2026 | Byte-Sized Business Boost*
