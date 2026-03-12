@@ -1,0 +1,948 @@
+/* BiteLocal styles
+   i tried to make it look nice but not too fancy
+   used google fonts because they look better than the default ones */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: #f9f3ec;
+    color: #222;
+}
+
+/* ---- header/nav ---- */
+
+header {
+    background-color: #cc2200;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.site-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.site-title h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 2px;
+}
+
+.site-title p {
+    font-size: 0.8rem;
+    opacity: 0.8;
+    margin-top: 2px;
+}
+
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    background: rgba(255,255,255,0.2);
+    padding: 7px 14px;
+    border-radius: 18px;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+nav a:hover { background: rgba(255,255,255,0.35); }
+nav a.active { background: rgba(255,255,255,0.35); }
+
+/* ---- flash messages ---- */
+
+.flash-msg {
+    margin: 12px 20px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+}
+
+.flash-msg button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    opacity: 0.6;
+}
+
+.flash-success { background: #d4edda; color: #155724; }
+.flash-error   { background: #f8d7da; color: #721c24; }
+.flash-info    { background: #d1ecf1; color: #0c5460; }
+
+/* ---- buttons ---- */
+
+.btn {
+    display: inline-block;
+    padding: 10px 22px;
+    border-radius: 22px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid transparent;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.95rem;
+    transition: opacity 0.15s;
+}
+
+.btn:hover   { opacity: 0.85; }
+.btn-red     { background: #cc2200; color: white; }
+.btn-white   { background: white; color: #cc2200; }
+.btn-outline { background: transparent; color: white; border-color: white; }
+.btn-gray    { background: #888; color: white; }
+.btn-block   { display: block; width: 100%; text-align: center; margin-top: 14px; }
+
+/* ---- hero ---- */
+
+.hero {
+    background: linear-gradient(135deg, #cc2200, #ff4422);
+    color: white;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.hero h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.2rem;
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+    line-height: 1.1;
+}
+
+.hero p {
+    font-size: 1.05rem;
+    max-width: 500px;
+    margin: 0 auto 24px auto;
+    opacity: 0.9;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.hero-numbers {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.hero-numbers div { text-align: center; }
+.hero-numbers span:first-child {
+    display: block;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem;
+    letter-spacing: 2px;
+}
+.hero-numbers span:last-child { font-size: 0.85rem; opacity: 0.8; }
+
+/* ---- deals slideshow ---- */
+
+.deals-section {
+    background: #1c1c1c;
+    color: white;
+    padding: 45px 20px;
+    text-align: center;
+}
+
+.deals-section h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.4rem;
+    letter-spacing: 2px;
+    color: #ffcc00;
+    margin-bottom: 6px;
+}
+
+.deals-section > p { opacity: 0.7; margin-bottom: 28px; }
+
+.slideshow-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 1100px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.slides-track {
+    display: flex;
+    gap: 18px;
+    transition: transform 0.35s ease;
+    flex: 1;
+    overflow: hidden;
+}
+
+.slide { min-width: calc(33.333% - 12px); flex-shrink: 0; }
+
+.slide a {
+    display: block;
+    border-radius: 14px;
+    overflow: hidden;
+    text-decoration: none;
+    color: white;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+    transition: transform 0.2s;
+}
+
+.slide a:hover { transform: translateY(-5px); }
+.slide img { width: 100%; height: 150px; object-fit: cover; }
+
+.slide-body { padding: 15px; }
+.slide-body h3 { font-size: 1.05rem; margin-bottom: 8px; }
+
+.slide-deal {
+    background: rgba(255,204,0,0.2);
+    border: 1px solid rgba(255,204,0,0.4);
+    border-radius: 7px;
+    padding: 6px 10px;
+    font-size: 0.83rem;
+    margin-bottom: 7px;
+}
+
+.slide-code {
+    background: rgba(255,255,255,0.1);
+    border: 1px dashed rgba(255,255,255,0.3);
+    border-radius: 7px;
+    padding: 5px 10px;
+    font-size: 0.82rem;
+    margin-bottom: 7px;
+}
+
+.slide-loc  { font-size: 0.78rem; opacity: 0.65; margin-bottom: 8px; }
+.slide-cta  { font-weight: 800; color: #ffcc00; font-size: 0.85rem; }
+
+.slide-badge {
+    background: rgba(255,255,255,0.2);
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: inline-block;
+    margin-bottom: 7px;
+}
+
+.arrow-btn {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    border: none;
+    font-size: 2.2rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    line-height: 1;
+}
+
+.arrow-btn:hover { background: rgba(255,255,255,0.3); }
+
+.slide-dots {
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+}
+
+.dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.2s;
+}
+
+.dot.on { background: #ffcc00; }
+
+/* ---- category color themes ---- */
+
+.american { background: linear-gradient(135deg, #cc2200, #e63300); }
+.italian  { background: linear-gradient(135deg, #1a8a3a, #22aa44); }
+.asian    { background: linear-gradient(135deg, #c47000, #e08800); }
+.mexican  { background: linear-gradient(135deg, #6a1fa0, #8833bb); }
+.desserts { background: linear-gradient(135deg, #1a5fa0, #2277cc); }
+
+/* ---- home category buttons ---- */
+
+.categories-section {
+    max-width: 1050px;
+    margin: 50px auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.categories-section h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: #cc2200;
+    margin-bottom: 24px;
+}
+
+.cat-buttons {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cat-btn {
+    padding: 22px 28px;
+    border-radius: 14px;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    min-width: 140px;
+    box-shadow: 0 5px 14px rgba(0,0,0,0.15);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: block;
+}
+
+.cat-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 22px rgba(0,0,0,0.22);
+}
+
+.cat-btn span { font-size: 2.2rem; display: block; margin-bottom: 8px; }
+.cat-btn h3   { font-size: 1.1rem; margin-bottom: 4px; }
+.cat-btn p    { font-size: 0.8rem; opacity: 0.9; }
+
+/* ---- features section ---- */
+
+.features-section {
+    background: white;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.features-section h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: #cc2200;
+    margin-bottom: 28px;
+}
+
+.features-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    max-width: 950px;
+    margin: 0 auto;
+}
+
+.feature-box {
+    background: #f9f3ec;
+    border: 2px solid #ead9c8;
+    border-radius: 12px;
+    padding: 22px 20px;
+    min-width: 160px;
+    max-width: 200px;
+    flex: 1;
+    text-decoration: none;
+    color: #222;
+    transition: transform 0.2s;
+    display: block;
+}
+
+.feature-box:hover { transform: translateY(-4px); }
+.feature-box span  { font-size: 2rem; display: block; margin-bottom: 8px; }
+.feature-box h3    { font-size: 1rem; color: #cc2200; margin-bottom: 5px; }
+.feature-box p     { font-size: 0.82rem; color: #555; }
+
+/* ---- browse / page sections ---- */
+
+.page-section {
+    max-width: 1150px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.page-section h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: #cc2200;
+    text-align: center;
+    margin-bottom: 22px;
+}
+
+.search-bar {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 18px;
+}
+
+.search-bar input {
+    padding: 10px 16px;
+    border: 2px solid #cc2200;
+    border-radius: 22px;
+    font-size: 0.95rem;
+    font-family: 'Nunito', sans-serif;
+    outline: none;
+    width: 220px;
+}
+
+.search-bar select {
+    padding: 10px 16px;
+    border: 2px solid #cc2200;
+    border-radius: 22px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #cc2200;
+    background: white;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    outline: none;
+}
+
+.result-info {
+    text-align: center;
+    color: #777;
+    font-size: 0.9rem;
+    margin-bottom: 22px;
+}
+
+/* ---- restaurant cards ---- */
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 22px;
+}
+
+.r-card {
+    border-radius: 14px;
+    color: white;
+    box-shadow: 0 5px 16px rgba(0,0,0,0.18);
+    transition: transform 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.r-card:hover { transform: translateY(-5px); }
+.r-card img   { width: 100%; height: 145px; object-fit: cover; }
+.r-card-body  { padding: 16px; }
+
+.r-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 7px;
+}
+
+.r-card-top h3 { font-size: 1.05rem; }
+
+.price {
+    background: rgba(255,255,255,0.25);
+    padding: 2px 9px;
+    border-radius: 10px;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.r-desc { font-size: 0.85rem; opacity: 0.9; margin-bottom: 6px; }
+.r-loc  { font-size: 0.8rem; opacity: 0.75; margin-bottom: 9px; }
+.r-rating { font-size: 0.85rem; margin-bottom: 8px; }
+.stars { color: #FFD700; letter-spacing: 1px; }
+
+.r-deal {
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 7px;
+    padding: 6px 9px;
+    font-size: 0.78rem;
+    margin-bottom: 10px;
+}
+
+.r-card a.view-link {
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
+
+.save-btn-form { position: absolute; top: 9px; right: 9px; }
+
+.save-btn {
+    background: rgba(255,255,255,0.3);
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+.save-btn:hover { background: rgba(255,255,255,0.5); }
+.card-link { text-decoration: none; color: white; display: block; }
+
+/* ---- deals page ---- */
+
+.deals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 22px;
+}
+
+.deal-card {
+    border-radius: 14px;
+    color: white;
+    text-decoration: none;
+    display: block;
+    box-shadow: 0 5px 16px rgba(0,0,0,0.18);
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.deal-card:hover { transform: translateY(-5px); }
+.deal-card img   { width: 100%; height: 145px; object-fit: cover; }
+.deal-card-body  { padding: 16px; }
+.deal-card-body h3 { font-size: 1.05rem; margin-bottom: 6px; }
+
+.deal-text {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 7px;
+    padding: 7px 10px;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.deal-code {
+    background: rgba(0,0,0,0.18);
+    border: 1px dashed rgba(255,255,255,0.35);
+    border-radius: 7px;
+    padding: 5px 10px;
+    font-size: 0.82rem;
+    margin-bottom: 8px;
+}
+
+.deal-bottom { font-size: 0.8rem; opacity: 0.75; margin-bottom: 10px; }
+
+.claim-btn {
+    background: rgba(255,255,255,0.18);
+    display: block;
+    text-align: center;
+    padding: 8px;
+    border-radius: 18px;
+    font-weight: 800;
+    font-size: 0.88rem;
+}
+
+/* ---- detail page ---- */
+
+.detail-page {
+    max-width: 880px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.detail-top {
+    border-radius: 14px;
+    color: white;
+    padding: 28px;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+    margin-bottom: 32px;
+}
+
+.detail-top img {
+    width: 240px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.detail-info { flex: 1; min-width: 180px; }
+
+.detail-badge {
+    background: rgba(255,255,255,0.25);
+    padding: 3px 11px;
+    border-radius: 14px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    display: inline-block;
+    margin-bottom: 9px;
+}
+
+.detail-info h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.9rem;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.detail-info p { opacity: 0.9; margin-bottom: 6px; font-size: 0.95rem; }
+
+.detail-deal {
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 9px;
+    padding: 10px 14px;
+    margin: 14px 0;
+    font-size: 0.92rem;
+}
+
+.detail-rating { margin-bottom: 16px; font-size: 0.95rem; }
+.big-stars { font-size: 1.4rem; color: #FFD700; margin-right: 5px; }
+
+.detail-btns {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+    align-items: center;
+}
+
+.save-form-inline button {
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+    padding: 9px 18px;
+    border-radius: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.92rem;
+}
+
+/* ---- reviews ---- */
+
+.reviews-section {
+    background: white;
+    border-radius: 14px;
+    padding: 28px;
+    box-shadow: 0 5px 14px rgba(0,0,0,0.08);
+}
+
+.reviews-section h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    color: #cc2200;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.review-count {
+    background: #cc2200;
+    color: white;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-family: 'Nunito', sans-serif;
+}
+
+.reviews-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 28px;
+}
+
+.review-item {
+    background: #f9f3ec;
+    border-radius: 10px;
+    padding: 14px 18px;
+    border-left: 4px solid #cc2200;
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 7px;
+    flex-wrap: wrap;
+}
+
+.reviewer-pic {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #cc2200;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+}
+
+.review-name  { font-weight: 700; }
+.review-date  { color: #888; font-size: 0.8rem; }
+.review-stars { color: #FFD700; letter-spacing: 1px; margin-left: auto; }
+.review-text  { color: #333; font-size: 0.92rem; line-height: 1.6; }
+.no-reviews-yet { color: #888; font-style: italic; margin-bottom: 22px; }
+
+/* ---- write review form ---- */
+
+.write-review {
+    border-top: 2px solid #ead9c8;
+    padding-top: 24px;
+    margin-top: 8px;
+}
+
+.write-review h4 {
+    font-size: 1.2rem;
+    color: #cc2200;
+    margin-bottom: 16px;
+    font-weight: 800;
+}
+
+.form-row { display: flex; gap: 14px; flex-wrap: wrap; }
+
+.form-field { flex: 1; min-width: 180px; margin-bottom: 13px; }
+
+.form-field label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 5px;
+    font-size: 0.93rem;
+}
+
+.req      { color: #cc2200; }
+.optional { color: #888; font-weight: 400; font-size: 0.82rem; }
+
+.form-field input,
+.form-field textarea,
+.form-box input,
+.form-box select,
+.form-box textarea {
+    width: 100%;
+    padding: 10px 13px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: 'Nunito', sans-serif;
+    outline: none;
+}
+
+.form-field input:focus,
+.form-field textarea:focus,
+.form-box input:focus,
+.form-box select:focus,
+.form-box textarea:focus {
+    border-color: #cc2200;
+}
+
+.char-note { color: #888; font-size: 0.78rem; margin-top: 3px; }
+
+/* star rating picker */
+.star-input {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 3px;
+    padding: 6px 0;
+}
+
+.star-input input[type="radio"] { display: none; }
+
+.star-input label {
+    font-size: 1.9rem;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.1s;
+    line-height: 1;
+}
+
+.star-input label:hover,
+.star-input label:hover ~ label,
+.star-input input:checked ~ label {
+    color: #FFD700;
+}
+
+/* ---- submit restaurant form page ---- */
+
+.form-page {
+    background: #ead9c8;
+    padding: 40px 20px;
+    min-height: 70vh;
+}
+
+.form-box {
+    background: white;
+    padding: 32px;
+    border-radius: 14px;
+    max-width: 580px;
+    margin: 0 auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.form-box h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.9rem;
+    color: #cc2200;
+    margin-bottom: 6px;
+}
+
+.form-box > p { color: #666; margin-bottom: 18px; }
+.form-box label { display: block; font-weight: 700; margin-top: 14px; margin-bottom: 5px; }
+
+/* ---- about page ---- */
+
+.about-page {
+    max-width: 750px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.about-card {
+    background: white;
+    border-radius: 14px;
+    padding: 30px;
+    box-shadow: 0 5px 14px rgba(0,0,0,0.09);
+    margin-bottom: 20px;
+}
+
+.about-card h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.9rem;
+    color: #cc2200;
+    margin-bottom: 14px;
+}
+
+.about-card p {
+    color: #333;
+    line-height: 1.8;
+    margin-bottom: 12px;
+    font-size: 1rem;
+}
+
+/* ---- report page ---- */
+
+.report-page { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+
+.report-page h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: #cc2200;
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.report-page > p { text-align: center; color: #777; margin-bottom: 32px; }
+
+.stat-row {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 36px;
+    flex-wrap: wrap;
+}
+
+.stat-box2 {
+    background: #cc2200;
+    color: white;
+    padding: 22px 36px;
+    border-radius: 12px;
+    text-align: center;
+    min-width: 140px;
+}
+
+.stat-box2 .n {
+    display: block;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem;
+    letter-spacing: 2px;
+}
+
+.report-block {
+    background: white;
+    border-radius: 12px;
+    padding: 22px 26px;
+    margin-bottom: 22px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+}
+
+.report-block h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    color: #cc2200;
+    margin-bottom: 14px;
+}
+
+.report-block table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+.report-block th { background: #cc2200; color: white; padding: 9px 13px; text-align: left; }
+.report-block td { padding: 9px 13px; border-bottom: 1px solid #ead9c8; }
+.report-block tr:last-child td { border-bottom: none; }
+.report-block a { color: #cc2200; font-weight: 700; text-decoration: none; }
+.report-block a:hover { text-decoration: underline; }
+
+/* ---- empty states ---- */
+
+.empty-msg { text-align: center; padding: 50px 20px; color: #888; }
+.empty-msg p { font-size: 1.15rem; margin-bottom: 18px; }
+
+/* ---- footer ---- */
+
+footer {
+    background: #1c1c1c;
+    color: white;
+    text-align: center;
+    padding: 22px;
+    font-size: 0.87rem;
+    line-height: 1.9;
+    margin-top: 50px;
+}
+
+/* ---- responsive ---- */
+
+@media (max-width: 860px) {
+    header { flex-direction: column; text-align: center; }
+    nav { justify-content: center; }
+    .detail-top { flex-direction: column; }
+    .detail-top img { width: 100%; height: 200px; }
+    .hero h2 { font-size: 2.4rem; }
+    .slide { min-width: calc(50% - 9px); }
+}
+
+@media (max-width: 600px) {
+    .cards-grid { grid-template-columns: 1fr; }
+    .search-bar { flex-direction: column; align-items: center; }
+    .search-bar input { width: 100%; }
+    .slide { min-width: 100%; }
+    .hero-numbers { gap: 20px; }
+    .form-row { flex-direction: column; }
+    .hero h2 { font-size: 2rem; }
+}
