@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Saved Restaurants - BiteLocal{% endblock %}
+
+{% block content %}
+<section class="page-section">
+    <h2>⭐ Your Saved Restaurants</h2>
+
+    {% if restaurants %}
+    <p class="result-info">You saved {{ restaurants|length }} restaurant{% if restaurants|length != 1 %}s{% endif %}</p>
+    <div class="cards-grid">
+        {% for r in restaurants %}
+        <div class="r-card {{ r.category }}">
+            <form method="POST" action="{{ url_for('bookmark', rid=r.id) }}" class="save-btn-form">
+                <button type="submit" class="save-btn" title="Remove from saved">⭐</button>
+            </form>
+            <a href="{{ url_for('detail', rid=r.id) }}" class="card-link">
+                <img src="{{ r.img }}" alt="{{ r.name }}">
+                <div class="r-card-body">
+                    <div class="r-card-top">
+                        <h3>{{ r.name }}</h3>
+                        <span class="price">{{ r.price }}</span>
+                    </div>
+                    <p class="r-desc">{{ r.description }}</p>
+                    <p class="r-loc">📍 {{ r.location }}</p>
+                    <div class="r-deal">🏷️ {{ r.deal }}</div>
+                    <span class="view-link">View Details →</span>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-msg">
+        <p>You haven't saved any restaurants yet!</p>
+        <a href="{{ url_for('browse') }}" class="btn btn-red">Browse Restaurants</a>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

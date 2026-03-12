@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Browse - BiteLocal{% endblock %}
+
+{% block content %}
+<section class="page-section">
+    <h2>All Restaurants</h2>
+
+    <!-- search and filter form -->
+    <form method="GET" action="{{ url_for('browse') }}" class="search-bar">
+        <input type="text" name="search" value="{{ search }}" placeholder="Search restaurants...">
+        <select name="category" onchange="this.form.submit()">
+            <option value="all"      {% if category == 'all' %}selected{% endif %}>All Types</option>
+            <option value="american" {% if category == 'american' %}selected{% endif %}>🍔 American</option>
+            <option value="italian"  {% if category == 'italian' %}selected{% endif %}>🍝 Italian</option>
+            <option value="asian"    {% if category == 'asian' %}selected{% endif %}>🍜 Asian</option>
+            <option value="mexican"  {% if category == 'mexican' %}selected{% endif %}>🌮 Mexican</option>
+            <option value="desserts" {% if category == 'desserts' %}selected{% endif %}>🍦 Desserts</option>
+        </select>
+        <select name="sort" onchange="this.form.submit()">
+            <option value="name"      {% if sort_by == 'name' %}selected{% endif %}>Sort: A-Z</option>
+            <option value="rating"    {% if sort_by == 'rating' %}selected{% endif %}>Sort: Top Rated</option>
+            <option value="price_low" {% if sort_by == 'price_low' %}selected{% endif %}>Sort: Cheapest First</option>
+        </select>
+        <button type="submit" class="btn btn-red">Search</button>
+    </form>
+
+    <p class="result-info">
+        Showing {{ restaurants|length }} restaurant{% if restaurants|length != 1 %}s{% endif %}
+        {% if search %} for "{{ search }}"{% endif %}
+    </p>
+
+    {% if restaurants %}
+    <div class="cards-grid">
+        {% for r in restaurants %}
+        <div class="r-card {{ r.category }}">
+            <!-- bookmark button -->
+            <form method="POST" action="{{ url_for('bookmark', rid=r.id) }}" class="save-btn-form">
+                <button type="submit" class="save-btn" title="Save this restaurant">
+                    {{ '⭐' if r.id in bookmarks else '☆' }}
+                </button>
+            </form>
+
+            <!-- whole card links to detail page -->
+            <a href="{{ url_for('detail', rid=r.id) }}" class="card-link">
+                <img src="{{ r.img }}" alt="{{ r.name }}">
+                <div class="r-card-body">
+                    <div class="r-card-top">
+                        <h3>{{ r.name }}</h3>
+                        <span class="price">{{ r.price }}</span>
+                    </div>
+                    <p class="r-desc">{{ r.description }}</p>
+                    <p class="r-loc">📍 {{ r.location }}</p>
+                    <div class="r-rating">
+                        {% if r.review_count > 0 %}
+                            <span class="stars">{% for i in range(1,6) %}{{ '★' if i <= r.avg_rating|round|int else '☆' }}{% endfor %}</span>
+                            {{ r.avg_rating }} ({{ r.review_count }} review{% if r.review_count != 1 %}s{% endif %})
+                        {% else %}
+                            <span style="opacity:0.7;font-style:italic">No reviews yet</span>
+                        {% endif %}
+                    </div>
+                    <div class="r-deal">🏷️ {{ r.deal }}</div>
+                    <span class="view-link">View Details →</span>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% else %}
+    <div class="empty-msg">
+        <p>😕 No restaurants found{% if search %} matching "{{ search }}"{% endif %}</p>
+        <a href="{{ url_for('browse') }}" class="btn btn-red">Clear Search</a>
+    </div>
+    {% endif %}
+
+</section>
+{% endblock %}

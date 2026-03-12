@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+{% block title %}Sources - BiteLocal{% endblock %}
+
+{% block content %}
+<section class="about-page">
+
+    <div class="about-card">
+        <h2>📚 Sources & Credits</h2>
+        <p>
+            Here are all the tools, libraries, tutorials, and resources we used
+            to build BiteLocal. We want to give credit to everything that helped us.
+        </p>
+    </div>
+
+    <!-- programming languages and frameworks -->
+    <div class="about-card">
+        <h2>Languages & Frameworks</h2>
+
+        <table style="width:100%; border-collapse:collapse; font-size:0.97rem;">
+            <thead>
+                <tr style="background:#cc2200; color:white;">
+                    <th style="padding:10px 14px; text-align:left;">Name</th>
+                    <th style="padding:10px 14px; text-align:left;">What we used it for</th>
+                    <th style="padding:10px 14px; text-align:left;">Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom:1px solid #ead9c8;">
+                    <td style="padding:10px 14px;"><strong>Python 3</strong></td>
+                    <td style="padding:10px 14px;">Main programming language for the backend</td>
+                    <td style="padding:10px 14px;"><a href="https://www.python.org" target="_blank" style="color:#cc2200;">python.org</a></td>
+                </tr>
+                <tr style="border-bottom:1px solid #ead9c8;">
+                    <td style="padding:10px 14px;"><strong>Flask</strong></td>
+                    <td style="padding:10px 14px;">Web framework — handles routing, templates, and sessions</td>
+                    <td style="padding:10px 14px;"><a href="https://flask.palletsprojects.com" target="_blank" style="color:#cc2200;">flask.palletsprojects.com</a></td>
+                </tr>
+                <tr style="border-bottom:1px solid #ead9c8;">
+                    <td style="padding:10px 14px;"><strong>Jinja2</strong></td>
+                    <td style="padding:10px 14px;">HTML templating engine (comes built into Flask)</td>
+                    <td style="padding:10px 14px;"><a href="https://jinja.palletsprojects.com" target="_blank" style="color:#cc2200;">jinja.palletsprojects.com</a></td>
+                </tr>
+                <tr style="border-bottom:1px solid #ead9c8;">
+                    <td style="padding:10px 14px;"><strong>HTML5</strong></td>
+                    <td style="padding:10px 14px;">Structure and layout of all web pages</td>
+                    <td style="padding:10px 14px;"><a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" style="color:#cc2200;">MDN Web Docs</a></td>
+                </tr>
+                <tr>
+                    <td style="padding:10px 14px;"><strong>CSS3</strong></td>
+                    <td style="padding:10px 14px;">Styling, colors, layout, and responsive design</td>
+                    <td style="padding:10px 14px;"><a href="https://developer.mozilla.org/en-US/docs/Web/CSS" target="_blank" style="color:#cc2200;">MDN Web Docs</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- images and fonts -->
+    <div class="about-card">
+        <h2>Images & Fonts</h2>
+
+        <table style="width:100%; border-collapse:collapse; font-size:0.97rem;">
+            <thead>
+                <tr style="background:#cc2200; color:white;">
+                    <th style="padding:10px 14px; text-align:left;">Name</th>
+                    <th style="padding:10px 14px; text-align:left;">What we used it for</th>
+                    <th style="padding:10px 14px; text-align:left;">Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom:1px solid #ead9c8;">
+                    <td style="padding:10px 14px;"><strong>Unsplash</strong></td>
+                    <td style="padding:10px 14px;">All food photos used on restaurant cards. Free to use with no attribution required.</td>
+                    <td style="padding:10px 14px;"><a href="https://unsplash.com" target="_blank" style="color:#cc2200;">unsplash.com</a></td>
+                </tr>
+                <tr style="border-bottom:1px solid #ead9c8;">
+                    <td style="padding:10px 14px;"><strong>Google Fonts — Bebas Neue</strong></td>
+                    <td style="padding:10px 14px;">Used for all headings and titles. Free open source font.</td>
+                    <td style="padding:10px 14px;"><a href="https://fonts.google.com/specimen/Bebas+Neue" target="_blank" style="color:#cc2200;">fonts.google.com</a></td>
+                </tr>
+                <tr>
+                    <td style="padding:10px 14px;"><strong>Google Fonts — Nunito</strong></td>
+                    <td style="padding:10px 14px;">Used for all body text and paragraphs. Free open source font.</td>
+                    <td style="padding:10px 14px;"><a href="https://fonts.google.com/specimen/Nunito" target="_blank" style="color:#cc2200;">fonts.google.com</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- tutorials and docs we referenced -->
+    <div class="about-card">
+        <h2>Tutorials & Documentation We Used</h2>
+
+        <table style="width:100%; border-collapse:collapse; font-size:0.97rem;">
+            <thead>
+                <tr style="background:#cc2200; color:white;">
+                    <th style="padding:10px 14px; text-align:left;">Resource</th>
+                    <th style="padding:10px 14px; text-align:left;">What we learned from it</th>
+                    <th style="padding:10px 14px; text-align:left;">Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom:1px solid #ead9c8;">
+                    <td style="padding:10px 14px;"><strong>Flask Official Docs</strong></td>
+                    <td style="padding:10px 14px;">How to set up routes, use templates, handle forms, and use sessions</td>
+                    <td style="padding:10px 14px;"><a href="https://flask.palletsprojects.com/en/stable/quickstart/" target="_blank" style="color:#cc2200;">Flask Quickstart</a></td>
+                </tr>
+                <tr style="border-bottom:1px solid #ead9c8;">
+                    <td style="padding:10px 14px;"><strong>Flask Sessions Docs</strong></td>
+                    <td style="padding:10px 14px;">How to store bookmarks in the browser session</td>
+                    <td style="padding:10px 14px;"><a href="https://flask.palletsprojects.com/en/stable/api/#sessions" target="_blank" style="color:#cc2200;">Flask Sessions</a></td>
+                </tr>
+                <tr style="border-bottom:1px solid #ead9c8;">
+                    <td style="padding:10px 14px;"><strong>Jinja2 Template Docs</strong></td>
+                    <td style="padding:10px 14px;">How to use template inheritance, loops, and if statements in HTML</td>
+                    <td style="padding:10px 14px;"><a href="https://jinja.palletsprojects.com/en/stable/templates/" target="_blank" style="color:#cc2200;">Jinja2 Templates</a></td>
+                </tr>
+                <tr style="border-bottom:1px solid #ead9c8;">
+                    <td style="padding:10px 14px;"><strong>MDN Web Docs — CSS Flexbox</strong></td>
+                    <td style="padding:10px 14px;">How to use flexbox for the nav bar and card layouts</td>
+                    <td style="padding:10px 14px;"><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout" target="_blank" style="color:#cc2200;">MDN Flexbox</a></td>
+                </tr>
+                <tr style="border-bottom:1px solid #ead9c8;">
+                    <td style="padding:10px 14px;"><strong>MDN Web Docs — CSS Grid</strong></td>
+                    <td style="padding:10px 14px;">How to make the restaurant cards grid that resizes on mobile</td>
+                    <td style="padding:10px 14px;"><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout" target="_blank" style="color:#cc2200;">MDN Grid</a></td>
+                </tr>
+                <tr style="border-bottom:1px solid #ead9c8;">
+                    <td style="padding:10px 14px;"><strong>Python re module docs</strong></td>
+                    <td style="padding:10px 14px;">How to use regex to validate email addresses</td>
+                    <td style="padding:10px 14px;"><a href="https://docs.python.org/3/library/re.html" target="_blank" style="color:#cc2200;">Python re docs</a></td>
+                </tr>
+                <tr>
+                    <td style="padding:10px 14px;"><strong>W3Schools — HTML Forms</strong></td>
+                    <td style="padding:10px 14px;">How POST forms work and how to get form data in Flask</td>
+                    <td style="padding:10px 14px;"><a href="https://www.w3schools.com/html/html_forms.asp" target="_blank" style="color:#cc2200;">W3Schools Forms</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- tools we used -->
+    <div class="about-card">
+        <h2>Tools We Used</h2>
+
+        <table style="width:100%; border-collapse:collapse; font-size:0.97rem;">
+            <thead>
+                <tr style="background:#cc2200; color:white;">
+                    <th style="padding:10px 14px; text-align:left;">Tool</th>
+                    <th style="padding:10px 14px; text-align:left;">What we used it for</th>
+                    <th style="padding:10px 14px; text-align:left;">Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom:1px solid #ead9c8;">
+                    <td style="padding:10px 14px;"><strong>Visual Studio Code</strong></td>
+                    <td style="padding:10px 14px;">Code editor we used to write all the Python, HTML, and CSS</td>
+                    <td style="padding:10px 14px;"><a href="https://code.visualstudio.com" target="_blank" style="color:#cc2200;">code.visualstudio.com</a></td>
+                </tr>
+                <tr style="border-bottom:1px solid #ead9c8;">
+                    <td style="padding:10px 14px;"><strong>Python.org</strong></td>
+                    <td style="padding:10px 14px;">Where we downloaded Python 3</td>
+                    <td style="padding:10px 14px;"><a href="https://www.python.org/downloads/" target="_blank" style="color:#cc2200;">python.org/downloads</a></td>
+                </tr>
+                <tr>
+                    <td style="padding:10px 14px;"><strong>Google Chrome</strong></td>
+                    <td style="padding:10px 14px;">Browser we used to test the website while building it</td>
+                    <td style="padding:10px 14px;"><a href="https://www.google.com/chrome/" target="_blank" style="color:#cc2200;">google.com/chrome</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</section>
+{% endblock %}

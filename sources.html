@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}Data Report - BiteLocal{% endblock %}
+
+{% block content %}
+<section class="report-page">
+    <h2>📊 Data Report</h2>
+    <p>This page shows stats about the app. It updates when people leave reviews or submit restaurants.</p>
+
+    <!-- overview numbers -->
+    <div class="stat-row">
+        <div class="stat-box2"><span class="n">{{ total_restaurants }}</span><span>Restaurants</span></div>
+        <div class="stat-box2"><span class="n">{{ total_reviews }}</span><span>Reviews</span></div>
+        <div class="stat-box2"><span class="n">{{ submissions|length }}</span><span>Submissions</span></div>
+    </div>
+
+    <!-- restaurants per category -->
+    <div class="report-block">
+        <h3>Restaurants by Category</h3>
+        <table>
+            <thead>
+                <tr><th>Category</th><th>Count</th><th>Percentage</th></tr>
+            </thead>
+            <tbody>
+                {% for cat, count in category_counts.items() %}
+                <tr>
+                    <td>{{ cat|title }}</td>
+                    <td>{{ count }}</td>
+                    <td>{{ ((count / total_restaurants) * 100)|round(1) }}%</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- top rated restaurants -->
+    <div class="report-block">
+        <h3>Top Rated Restaurants</h3>
+        {% if top_restaurants %}
+        <table>
+            <thead>
+                <tr><th>Name</th><th>Avg Rating</th><th>Reviews</th><th>Category</th></tr>
+            </thead>
+            <tbody>
+                {% for r in top_restaurants %}
+                <tr>
+                    <td><a href="{{ url_for('detail', rid=r.id) }}">{{ r.name }}</a></td>
+                    <td>
+                        <span style="color:#FFD700">
+                            {% for i in range(1,6) %}{{ '★' if i <= r.avg_rating|round|int else '☆' }}{% endfor %}
+                        </span>
+                        {{ r.avg_rating }}
+                    </td>
+                    <td>{{ r.review_count }}</td>
+                    <td>{{ r.category|title }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p style="color:#777">No reviews yet. Go leave some reviews and come back!</p>
+        {% endif %}
+    </div>
+
+    <!-- user submissions -->
+    <div class="report-block">
+        <h3>Community Submissions</h3>
+        {% if submissions %}
+        <table>
+            <thead>
+                <tr><th>Restaurant Name</th><th>Category</th><th>Location</th><th>Date</th></tr>
+            </thead>
+            <tbody>
+                {% for s in submissions %}
+                <tr>
+                    <td>{{ s.name }}</td>
+                    <td>{{ s.category|title }}</td>
+                    <td>{{ s.location }}</td>
+                    <td>{{ s.date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p style="color:#777">No submissions yet. <a href="{{ url_for('submit') }}">Add a restaurant!</a></p>
+        {% endif %}
+    </div>
+
+</section>
+{% endblock %}

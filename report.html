@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}About - BiteLocal{% endblock %}
+
+{% block content %}
+<section class="about-page">
+
+    <div class="about-card">
+        <h2>About BiteLocal 🍔</h2>
+        <p>
+            Hey! We made BiteLocal for our FBLA Coding and Programming project this year.
+            The topic is "Byte-Sized Business Boost" which is about using technology to help small local businesses.
+            We decided to make a restaurant finder app because we thought it would actually be useful for people
+            trying to find good places to eat in Louisville without just googling it.
+        </p>
+        <p>
+            We spent a lot of time figuring out how Flask works because neither of us had used it before.
+            We watched some YouTube tutorials and read the Flask docs. The hardest part was getting the
+            session stuff to work for bookmarks, and also the star rating form took a while to get right.
+        </p>
+        <p>
+            The app lets you browse restaurants by food type, search for specific places,
+            leave star ratings and written reviews, save your favorites with bookmarks,
+            find deals and coupon codes, and submit restaurants we might be missing.
+        </p>
+    </div>
+
+    <div class="about-card">
+        <h2>How We Built It</h2>
+        <p><strong>Language: Python 3</strong> — we learned Python in our CS class so it made sense to use it.
+           It's also what real companies like Instagram and Spotify use so we thought it was a good choice.</p>
+        <p><strong>Framework: Flask</strong> — Flask lets you make a real website with multiple pages and forms.
+           We had to install it with pip and it took a little while to figure out but once it worked it was great.</p>
+        <p><strong>Templates: Jinja2</strong> — this is built into Flask. It means we can write the header
+           and footer one time in base.html and every page uses it automatically. This is called the DRY principle
+           (Don't Repeat Yourself) which we learned about in class.</p>
+        <p><strong>Styling: CSS3</strong> — we wrote all the CSS ourselves. We used Google Fonts to make it
+           look nicer than default browser fonts.</p>
+        <p><strong>Images: Unsplash</strong> — free high quality food photos that are free to use.</p>
+    </div>
+
+    <div class="about-card">
+        <h2>Security Features</h2>
+        <p>We added a few things to make the app more secure and prevent bad input:</p>
+        <p><strong>Honeypot fields</strong> — there's a hidden text field in every form that real users can't see.
+           If it gets filled in, it means a bot submitted the form so we ignore it.</p>
+        <p><strong>Input validation</strong> — we check all form inputs before saving them.
+           For names we check the length and make sure there are no HTML characters.
+           For emails we use a regex pattern and also reject known fake emails like test@test.com.
+           For ratings we make sure the value is an integer between 1 and 5.</p>
+        <p><strong>Syntactic vs Semantic validation</strong> — syntactic means checking the format is correct
+           (like email regex), semantic means checking if the value actually makes sense
+           (like rejecting a name that is all numbers).</p>
+    </div>
+
+</section>
+{% endblock %}

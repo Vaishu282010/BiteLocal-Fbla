@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Add a Restaurant - BiteLocal{% endblock %}
+
+{% block content %}
+<div class="form-page">
+    <div class="form-box">
+        <h2>Add a Restaurant 🍽️</h2>
+        <p>Know a great local place we don't have yet? Tell us about it and we'll add it!</p>
+
+        <form method="POST" action="{{ url_for('submit') }}">
+            <!-- hidden honeypot field for bot prevention -->
+            <input type="text" name="website" style="display:none" tabindex="-1">
+
+            <label>Restaurant Name <span class="req">*</span></label>
+            <input type="text" name="name" value="{{ form_data.get('name', '') }}"
+                   placeholder="e.g. Joe's Pizza" required maxlength="100">
+
+            <label>Your Email <span class="req">*</span></label>
+            <input type="email" name="email" value="{{ form_data.get('email', '') }}"
+                   placeholder="e.g. you@gmail.com" required>
+
+            <label>Food Category <span class="req">*</span></label>
+            <select name="category" required>
+                <option value="">Pick a category...</option>
+                <option value="american" {% if form_data.get('category') == 'american' %}selected{% endif %}>🍔 American</option>
+                <option value="italian"  {% if form_data.get('category') == 'italian' %}selected{% endif %}>🍝 Italian</option>
+                <option value="asian"    {% if form_data.get('category') == 'asian' %}selected{% endif %}>🍜 Asian</option>
+                <option value="mexican"  {% if form_data.get('category') == 'mexican' %}selected{% endif %}>🌮 Mexican</option>
+                <option value="desserts" {% if form_data.get('category') == 'desserts' %}selected{% endif %}>🍦 Desserts</option>
+            </select>
+
+            <label>Location <span class="req">*</span></label>
+            <input type="text" name="location" value="{{ form_data.get('location', '') }}"
+                   placeholder="e.g. Downtown Louisville, KY" required>
+
+            <label>Description <span class="optional">(optional)</span></label>
+            <textarea name="description" rows="4" maxlength="500"
+                      placeholder="What makes this place special? What should people order?">{{ form_data.get('description', '') }}</textarea>
+
+            <button type="submit" class="btn btn-red btn-block">Submit Restaurant ✅</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
