@@ -1,7 +1,7 @@
 # BiteLocal - a website to find local restaurants in Louisville
 # made for FBLA Coding and Programming 2025-2026
 # topic is Byte-Sized Business Boost
-# by: [your name] and [partner name] from [your school]
+# by: vaishu and Ash from Eastern High School
 #
 # we used python because thats what we learned in class
 # flask is what makes the website work with multiple pages
