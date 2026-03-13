@@ -1,8 +1,7 @@
 # BiteLocal - a website to find local restaurants in Louisville
 # made for FBLA Coding and Programming 2025-2026
 # topic is Byte-Sized Business Boost
-# by: [your name] and [partner name] from [your school]
-#
+# by: [Vaishu] and [Ash] from [Eastern high school]
 # we used python because thats what we learned in class
 # flask is what makes the website work with multiple pages
 # we watched some youtube tutorials to figure out the session stuff
@@ -16,7 +15,7 @@ app = Flask(__name__)
 app.secret_key = "bitelocal2025secret"
 
 
-# all our restaurant data is stored here as a list of dictionaries
+
 # we added website links so people can look up the real place
 RESTAURANTS = [
     # american food
@@ -248,7 +247,7 @@ RESTAURANT_INDEX = {}
 for r in RESTAURANTS:
     RESTAURANT_INDEX[r["id"]] = r
 
-# we store all reviews in memory as a dictionary
+# we store all reviews in memory  like a dictionary
 # each key is a restaurant id and the value is a list of review dicts
 reviews = {}
 for r in RESTAURANTS:
