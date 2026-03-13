@@ -84,9 +84,8 @@
             <h4>✍️ Write a Review</h4>
 
             <form method="POST" action="{{ url_for('submit_review', rid=restaurant.id) }}">
-                <!-- honeypot - bots fill this but real users cant see it -->
-                <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
-
+               <p><strong>Verification: What is {{ captcha_question }}?</strong></p>
+<input type="number" name="captcha" placeholder="Enter answer" required>
                 <div class="form-row">
                     <div class="form-field">
                         <label>Your Name <span class="req">*</span></label>
