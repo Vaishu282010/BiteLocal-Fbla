@@ -3,8 +3,8 @@
 
 {% block content %}
 <section class="page-section">
-    <h2>🏷️ All Deals & Discounts</h2>
-    <p class="result-info">{{ restaurants|length }} deals — click any card to go to that restaurant and claim it!</p>
+    <h2> All Deals & Discounts</h2>
+    <p class="result-info">{{ restaurants|length }} deals — click any restaurant and claim their deal !</p>
 
     <div class="deals-grid">
         {% for r in restaurants %}
@@ -13,9 +13,9 @@
             <div class="deal-card-body">
                 <span class="slide-badge">{{ r.category|title }}</span>
                 <h3>{{ r.name }}</h3>
-                <div class="deal-text">🏷️ {{ r.deal }}</div>
+                <div class="deal-text"> {{ r.deal }}</div>
                 <div class="deal-code">Promo code: <strong>{{ r.deal_code }}</strong></div>
-                <p class="deal-bottom">📍 {{ r.location }} &nbsp;|&nbsp; {{ r.price }}</p>
+                <p class="deal-bottom"> {{ r.location }} &nbsp;|&nbsp; {{ r.price }}</p>
                 <span class="claim-btn">Go to Restaurant &amp; Claim →</span>
             </div>
         </a>
