@@ -84,8 +84,7 @@
             <h4>✍️ Write a Review</h4>
 
             <form method="POST" action="{{ url_for('submit_review', rid=restaurant.id) }}">
-                <!-- honeypot - bots fill this but real users cant see it -->
-                <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
+                
 
                 <div class="form-row">
                     <div class="form-field">
@@ -115,6 +114,11 @@
                     <textarea name="comment" rows="4" maxlength="400"
                         placeholder="What did you order? Would you go back? What should people try?"></textarea>
                     <p class="char-note">Max 400 characters</p>
+                </div>
+                <div class="form-field">
+                    <label>Verification: What is {{ captcha_question }}? <span class="req">*</span></label>
+                    <input type="text" name="captcha" placeholder="Type your answer here" required>
+                    <p class="char-note">Answer the math question to prove you're not a bot</p>
                 </div>
 
                 <button type="submit" class="btn btn-red btn-block">Post Review ⭐</button>
