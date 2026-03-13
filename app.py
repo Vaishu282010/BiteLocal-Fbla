@@ -2,7 +2,7 @@
 # made for FBLA Coding and Programming 2025-2026
 # topic is Byte-Sized Business Boost
 # by: vaishu and Ash from Eastern High School
-#
+
 # we used python because thats what we learned in class
 # flask is what makes the website work with multiple pages
 # we watched some youtube tutorials to figure out the session stuff
@@ -405,23 +405,23 @@ def detail(rid):
 # handle review form submission
 @app.route("/review/<rid>", methods=["POST"])
 def submit_review(rid):
-    # honeypot field - bots fill this in but real users cant see it
-    if request.form.get("website", ""):
-        flash("Bot detected!", "error")
-        return redirect(url_for("detail", rid=rid))
 
     author = request.form.get("author", "").strip()
     rating = request.form.get("rating", "").strip()
     comment = request.form.get("comment", "").strip()
+    captcha = request.form.get("captcha", "").strip()
 
     # collect all errors
     errors = []
     e1 = check_name(author)
     e2 = check_rating(rating)
+    e3 = check_captcha(captcha)
     if e1:
         errors.append(e1)
     if e2:
         errors.append(e2)
+    if e3:
+        errors.append(e3)    
     if len(comment) > 400:
         errors.append("Comment is too long, keep it under 400 characters")
 
@@ -485,25 +485,26 @@ def deals():
 @app.route("/submit", methods=["GET", "POST"])
 def submit():
     if request.method == "POST":
-        # bot check
-        if request.form.get("website", ""):
-            flash("Bot detected!", "error")
-            return redirect(url_for("submit"))
+        
 
         name = request.form.get("name", "").strip()
         email = request.form.get("email", "").strip()
         category = request.form.get("category", "").strip()
         location = request.form.get("location", "").strip()
         description = request.form.get("description", "").strip()
+        captcha = request.form.get("captcha", "").strip()
 
         # validate everything
         errors = []
         e1 = check_name(name)
         e2 = check_email(email)
+        e3 = check_captcha(captcha)
         if e1:
             errors.append(e1)
         if e2:
             errors.append(e2)
+        if e3:
+            errors.append(e3)
         if not category:
             errors.append("Please pick a category")
         if len(location) < 3:
@@ -514,7 +515,7 @@ def submit():
         if len(errors) > 0:
             for e in errors:
                 flash(e, "error")
-            return render_template("submit.html", form_data=request.form)
+            return render_template("submit.html", form_data={}, captcha_question=make_captcha())
 
         # save submission
         submissions.append({
