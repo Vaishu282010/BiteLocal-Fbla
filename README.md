@@ -96,8 +96,8 @@ bitelocal2/
 ## Security & Validation
 
 ### Bot Prevention
-I added Captcha Bot verfication 
-we know it was a bot and we reject the submission.
+I added Captcha Bot verfication,
+we know it is  a bot and we reject the submission.
 
 ### Input Validation
 We validate all user input before saving it. We check both:
