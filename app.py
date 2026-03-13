@@ -1,7 +1,7 @@
 # BiteLocal - a website to find local restaurants in Louisville
 # made for FBLA Coding and Programming 2025-2026
 # topic is Byte-Sized Business Boost
-# by: [Vaishu] and [Ash] from [Eastern high school]
+# by: Vaishu and Ash from Eastern high school
 # we used python because thats what we learned in class
 # flask is what makes the website work with multiple pages
 # we watched some youtube tutorials to figure out the session stuff
@@ -9,6 +9,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from datetime import datetime
 import re
+import random
 
 app = Flask(__name__)
 # this is needed for sessions and flash messages to work
@@ -313,7 +314,28 @@ def check_email(val):
     if val.lower() in fake:
         return "Please use a real email"
     return None
+def make_captcha():
+    num1 = random.randint(1, 15)
+    num2 = random.randint(1, 15)
+    operator = random.choice(['+', '-'])
+    if operator == '-':
+        num1, num2 = max(num1, num2), min(num1, num2)
+        answer = num1 - num2
+    else:
+        answer = num1 + num2
+    session["captcha_answer"] = answer
+    return f"{num1} {operator} {num2}"
 
+def check_captcha(user_input):
+    correct = session.get("captcha_answer")
+    if correct is None:
+        return "Verification expired, please try again"
+    try:
+        if int(user_input) != correct:
+            return "Wrong answer, please try again"
+    except ValueError:
+        return "Please enter a number"
+    return None
 
 # make sure rating is 1-5
 def check_rating(val):
@@ -397,16 +419,18 @@ def detail(rid):
         restaurant=restaurant,
         restaurant_reviews=restaurant_reviews,
         avg_rating=avg,
-        bookmarks=get_bookmarks()
+        bookmarks=get_bookmarks(),
+        captcha_question=make_captcha()
     )
 
 
 # handle review form submission
 @app.route("/review/<rid>", methods=["POST"])
 def submit_review(rid):
-    # honeypot field - bots fill this in but real users cant see it
-    if request.form.get("website", ""):
-        flash("Bot detected!", "error")
+    captcha = request.form.get("captcha", "").strip()
+    captcha_error = check_captcha(captcha)
+    if captcha_error:
+        flash(captcha_error, "error")
         return redirect(url_for("detail", rid=rid))
 
     author = request.form.get("author", "").strip()
