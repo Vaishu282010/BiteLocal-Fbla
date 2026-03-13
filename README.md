@@ -96,8 +96,7 @@ bitelocal2/
 ## Security & Validation
 
 ### Bot Prevention
-Every form has a **honeypot field** — a hidden text input that real users cannot see.
-Bots usually fill in every field they find, so if that hidden field has any text in it,
+I added Captcha Bot verfication 
 we know it was a bot and we reject the submission.
 
 ### Input Validation
