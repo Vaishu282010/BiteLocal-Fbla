@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+{% block title %}BiteLocal - Find Local Restaurants in Louisville{% endblock %}
+
+{% block content %}
+
+<!-- hero banner -->
+<section class="hero">
+    <h2>Find the Best<br>Local Restaurants 🍕</h2>
+    <p>Discover local spots, read real reviews, save your favorites, and find deals at restaurants in Louisville KY.</p>
+    <div class="hero-buttons">
+        <a href="{{ url_for('browse') }}" class="btn btn-white">Browse Restaurants</a>
+        <a href="{{ url_for('deals') }}"  class="btn btn-outline">🏷️ See All Deals</a>
+    </div>
+    <div class="hero-numbers">
+        <div><span>{{ restaurants|length }}</span><span>Restaurants</span></div>
+        <div><span>5</span><span>Food Types</span></div>
+        <div><span>100%</span><span>Local</span></div>
+    </div>
+</section>
+
+<!-- deals slideshow -->
+<section class="deals-section">
+    <h2>🏷️ Hot Deals Right Now</h2>
+    <p>Click any deal to go to that restaurant and claim it!</p>
+
+    <div class="slideshow-container">
+        <button class="arrow-btn" onclick="prevSlide()">&#8249;</button>
+
+        <div class="slides-track" id="track">
+            {% for r in restaurants %}
+            <div class="slide {{ r.category }}">
+                <a href="{{ url_for('detail', rid=r.id) }}">
+                    <img src="{{ r.img }}" alt="{{ r.name }}">
+                    <div class="slide-body">
+                        <span class="slide-badge">{{ r.category|title }}</span>
+                        <h3>{{ r.name }}</h3>
+                        <div class="slide-deal">🏷️ {{ r.deal }}</div>
+                        <div class="slide-code">Code: <strong>{{ r.deal_code }}</strong></div>
+                        <p class="slide-loc">📍 {{ r.location }}</p>
+                        <span class="slide-cta">Tap to claim →</span>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+
+        <button class="arrow-btn" onclick="nextSlide()">&#8250;</button>
+    </div>
+
+    <!-- dots to jump to slides -->
+    <div class="slide-dots" id="dots">
+        {% for r in restaurants %}
+        <button class="dot {{ 'on' if loop.first else '' }}" onclick="goTo({{ loop.index0 }})"></button>
+        {% endfor %}
+    </div>
+
+    <div style="text-align:center; margin-top:22px;">
+        <a href="{{ url_for('deals') }}" class="btn btn-red">View All {{ restaurants|length }} Deals</a>
+    </div>
+</section>
+
+<!-- browse by food type -->
+<section class="categories-section">
+    <h2>Browse by Food Type</h2>
+    <div class="cat-buttons">
+        <a href="{{ url_for('browse', category='american') }}" class="cat-btn american">
+            <span>🍔</span><h3>American</h3><p>Burgers, BBQ, Diners</p>
+        </a>
+        <a href="{{ url_for('browse', category='italian') }}" class="cat-btn italian">
+            <span>🍝</span><h3>Italian</h3><p>Pasta, Pizza</p>
+        </a>
+        <a href="{{ url_for('browse', category='asian') }}" class="cat-btn asian">
+            <span>🍜</span><h3>Asian</h3><p>Sushi, Pho, Chinese</p>
+        </a>
+        <a href="{{ url_for('browse', category='mexican') }}" class="cat-btn mexican">
+            <span>🌮</span><h3>Mexican</h3><p>Tacos, Burritos</p>
+        </a>
+        <a href="{{ url_for('browse', category='desserts') }}" class="cat-btn desserts">
+            <span>🍦</span><h3>Desserts</h3><p>Ice Cream & Sweets</p>
+        </a>
+    </div>
+</section>
+
+<!-- features overview -->
+<section class="features-section">
+    <h2>What You Can Do</h2>
+    <div class="features-grid">
+        <a href="{{ url_for('browse') }}" class="feature-box">
+            <span>🔍</span><h3>Search</h3><p>Find restaurants by name, type, or location</p>
+        </a>
+        <a href="{{ url_for('browse') }}" class="feature-box">
+            <span>⭐</span><h3>Leave Reviews</h3><p>Rate restaurants and share your opinion</p>
+        </a>
+        <a href="{{ url_for('bookmarks_page') }}" class="feature-box">
+            <span>🔖</span><h3>Save Favorites</h3><p>Bookmark places you want to visit</p>
+        </a>
+        <a href="{{ url_for('deals') }}" class="feature-box">
+            <span>🏷️</span><h3>Find Deals</h3><p>Every restaurant has a special discount</p>
+        </a>
+        <a href="{{ url_for('submit') }}" class="feature-box">
+            <span>➕</span><h3>Add a Restaurant</h3><p>Know a spot we're missing? Submit it!</p>
+        </a>
+        <a href="{{ url_for('report') }}" class="feature-box">
+            <span>📊</span><h3>View Stats</h3><p>See ratings, top spots, and data</p>
+        </a>
+    </div>
+</section>
+
+<!-- slideshow javascript -->
+<script>
+    let current = 0;
+    const track = document.getElementById("track");
+    const dots = document.querySelectorAll(".dot");
+
+    // figure out how many slides are visible at once
+    function visible() {
+        if (window.innerWidth < 600) return 1;
+        if (window.innerWidth < 860) return 2;
+        return 3;
+    }
+
+    function maxSlide() {
+        return track.children.length - visible();
+    }
+
+    function updateTrack() {
+        // get the width of one slide including the gap
+        let slideW = track.children[0].offsetWidth + 18;
+        track.style.transform = "translateX(-" + (current * slideW) + "px)";
+
+        // update which dot is active
+        dots.forEach(function(d, i) {
+            d.classList.toggle("on", i === current);
+        });
+    }
+
+    function nextSlide() {
+        if (current < maxSlide()) {
+            current++;
+        } else {
+            current = 0; // go back to start
+        }
+        updateTrack();
+    }
+
+    function prevSlide() {
+        if (current > 0) {
+            current--;
+        } else {
+            current = maxSlide();
+        }
+        updateTrack();
+    }
+
+    function goTo(n) {
+        current = Math.min(n, maxSlide());
+        updateTrack();
+    }
+
+    // auto play every 3 seconds
+    setInterval(nextSlide, 3000);
+
+    window.addEventListener("resize", updateTrack);
+</script>
+
+{% endblock %}
