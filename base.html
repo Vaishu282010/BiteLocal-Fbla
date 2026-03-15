@@ -31,16 +31,12 @@
 </header>
 
 <main>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% for cat, msg in messages %}
+    
         <div class="flash-msg flash-{{ cat }}">
             {{ msg }}
             <button onclick="this.parentElement.remove()">×</button>
         </div>
-        {% endfor %}
-    {% endwith %}
-
-    {% block content %}{% endblock %}
+        
 </main>
 
 <footer>
