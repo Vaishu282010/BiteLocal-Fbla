@@ -65,10 +65,6 @@ We chose Python 3 because:
 - Flask makes it easy to build a multi-page website without a lot of setup
 - You can run the whole app with one command
 
-We used Flask specifically because it is lightweight and good for beginner web projects.
-Jinja2 templates (built into Flask) let us write the header and footer one time and
-reuse them on every page, which follows the DRY principle (Don't Repeat Yourself).
-
 ---
 
 ## File Structure
