@@ -9,7 +9,7 @@
 ## What is BiteLocal?
 
 BiteLocal is a web app that helps people in Louisville, KY find local restaurants.
-You can browse by food type, search by name, writw read reviews, save favorites, and find
+You can browse by food type, search by name, write and read reviews, save favorites, and find
 special deals. We made it for FBLA Coding and Programming because we thought a
 restaurant finder was a good way to help boost small local businesses.
 
