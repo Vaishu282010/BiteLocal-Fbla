@@ -35,7 +35,7 @@ python app.py
 ```
 
 ### Step 4 - Open in browser
-Go to: **http://127.0.0.1:5000**
+Go to: **https://vbomm01pythonanywherecom.pythonanywhere.com/**
 
 > Note: Keep the terminal open while using the app. Closing it stops the website.
 
