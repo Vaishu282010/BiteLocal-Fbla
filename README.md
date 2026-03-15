@@ -55,6 +55,8 @@ Go to: **https://vbomm01pythonanywherecom.pythonanywhere.com/**
 - **Data report page** — shows stats like total restaurants, top rated, and submissions
 
 ---
+## Web Development
+The Web Development we used are HTML, Javascript and CSS. Python works with Flask to hold the data information on the server.
 
 ## Why We Used Python
 
