@@ -325,7 +325,25 @@ def check_rating(val):
     except:
         return "Please pick a star rating"
     return None
+import random
 
+def make_captcha():
+    """Generates a simple math question and saves the answer in the session."""
+    num1 = random.randint(1, 10)
+    num2 = random.randint(1, 10)
+    session["captcha_answer"] = num1 + num2
+    return f"{num1} + {num2}"
+
+def check_captcha(val):
+    """Checks if the user's answer matches the one in the session."""
+    try:
+        user_answer = int(val)
+        correct_answer = session.get("captcha_answer")
+        if user_answer == correct_answer:
+            return None # No error
+        return "Incorrect verification answer. Please try again."
+    except (ValueError, TypeError):
+        return "Please enter a valid number for verification."
 
 # home page
 @app.route("/")
@@ -399,6 +417,7 @@ def detail(rid):
         restaurant_reviews=restaurant_reviews,
         avg_rating=avg,
         bookmarks=get_bookmarks()
+        captcha_question=make_captcha()                   
     )
 
 
@@ -515,8 +534,8 @@ def submit():
         if len(errors) > 0:
             for e in errors:
                 flash(e, "error")
-            return render_template("submit.html", form_data={}, captcha_question=make_captcha())
-
+            return render_template("submit.html", form_data= request.form, captcha_question=make_captcha())
+             return render_template("submit.html", form_data={}, captcha_question=make_captcha())
         # save submission
         submissions.append({
             "name": name,
