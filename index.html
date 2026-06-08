@@ -120,11 +120,17 @@
     }
 
     function maxSlide() {
-        return track.children.length - visible();
+        let total = track.children.lenght;
+        let show = visible();
+        return Math.max(0, total - show);
+        
     }
 
     function updateTrack() {
-        // get the width of one slide including the gap
+        if (track.children.length === 0) return;
+
+        current = Math.min(current, maxslide());
+        
         let slideW = track.children[0].offsetWidth + 18;
         track.style.transform = "translateX(-" + (current * slideW) + "px)";
 
@@ -158,9 +164,15 @@
     }
 
     // auto play every 3 seconds
-    setInterval(nextSlide, 3000);
+   let slideInterval = setInterval(nextSlide, 3000);
+
+    track.parentElement.addEventlistener('mouseenter',() => clearInterval(slideInterval));
+        track.parentElement.addEventlistener('mouseenter',() =>slideInterval = setInterval(nextSlide, 3000));
+    
 
     window.addEventListener("resize", updateTrack);
+
+    window.onload = updateTrack;
 </script>
 
 {% endblock %}
