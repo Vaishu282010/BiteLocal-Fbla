@@ -416,7 +416,7 @@ def detail(rid):
         restaurant=restaurant,
         restaurant_reviews=restaurant_reviews,
         avg_rating=avg,
-        bookmarks=get_bookmarks()
+        bookmarks=get_bookmarks(),
         captcha_question=make_captcha()                   
     )
 
@@ -534,8 +534,10 @@ def submit():
         if len(errors) > 0:
             for e in errors:
                 flash(e, "error")
-            return render_template("submit.html", form_data= request.form, captcha_question=make_captcha())
-             return render_template("submit.html", form_data={}, captcha_question=make_captcha())
+                        return render_template("submit.html", form_data=request.form, captcha_question=make_captcha())
+        # ...
+    return render_template("submit.html", form_data={}, captcha_question=make_captcha())
+
         # save submission
         submissions.append({
             "name": name,
