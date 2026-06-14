@@ -185,11 +185,9 @@ nav a.active { background: rgba(255,255,255,0.35); }
     display: flex;
     gap: 18px;
     transition: transform 0.35s ease;
-    width: max-content; /* FIXED: Now expands outwards so items can line up horizontally */
-}
-
+    width: max-content; 
 .slide { 
-    width: 320px; /* FIXED: Changed from dynamic percentage calculation to absolute size */
+    width: 320px; 
     flex-shrink: 0; 
 }
 
@@ -943,4 +941,3 @@ footer {
     .hero h2 { font-size: 2rem; }
 }
 
-/* FIXED: Conflicting mobile dimensions that overrode JS carousel parameters have been completely removed from here. */
