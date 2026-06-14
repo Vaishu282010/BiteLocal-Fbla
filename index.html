@@ -154,5 +154,7 @@ Local Restaurants 🍕</h2>
     track.parentElement.addEventListener('mouseenter', () => clearInterval(slideInterval)); // Fixed 'addEventListener'
     track.parentElement.addEventListener('mouseleave', () => slideInterval = setInterval(nextSlide, 3000)); // Fixed 'addEventListener'
     window.addEventListener("resize", updateTrack);
-    window.onload = updateTrack;
+
+    updateTrack(); 
+    window.addEventListener("load", updateTrack);
 </script>
