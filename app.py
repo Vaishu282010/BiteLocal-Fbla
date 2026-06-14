@@ -10,16 +10,13 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from datetime import datetime
 import re
+import random
 
 app = Flask(__name__)
-# this is needed for sessions and flash messages to work
 app.secret_key = "bitelocal2025secret"
 
-
-# all our restaurant data is stored here as a list of dictionaries
-# we added website links so people can look up the real place
+# Restaurant Data
 RESTAURANTS = [
-    # american food
     {
         "id": "burger-barn",
         "name": "Burger Barn",
@@ -68,7 +65,6 @@ RESTAURANTS = [
         "website": "https://www.yelp.com/search?find_desc=smokehouse&find_loc=Louisville%2C+KY",
         "img": "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=400&q=80",
     },
-    # italian food
     {
         "id": "nonna-pasta",
         "name": "Nonna's Pasta House",
@@ -117,7 +113,6 @@ RESTAURANTS = [
         "website": "https://www.yelp.com/search?find_desc=calzone&find_loc=Louisville%2C+KY",
         "img": "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&q=80",
     },
-    # asian food
     {
         "id": "dragon-wok",
         "name": "Dragon Wok",
@@ -166,7 +161,6 @@ RESTAURANTS = [
         "website": "https://www.yelp.com/search?find_desc=thai+food&find_loc=Louisville%2C+KY",
         "img": "https://images.unsplash.com/photo-1562802378-063ec186a863?w=400&q=80",
     },
-    # mexican food
     {
         "id": "taco-fiesta",
         "name": "Taco Fiesta",
@@ -203,7 +197,6 @@ RESTAURANTS = [
         "website": "https://www.yelp.com/search?find_desc=tex+mex&find_loc=Louisville%2C+KY",
         "img": "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=400&q=80",
     },
-    # desserts
     {
         "id": "sweet-scoops",
         "name": "Sweet Scoops Ice Cream",
@@ -242,362 +235,145 @@ RESTAURANTS = [
     },
 ]
 
-# this makes it easy to find a restaurant by its id really fast
-# basically like a lookup table
-RESTAURANT_INDEX = {}
-for r in RESTAURANTS:
-    RESTAURANT_INDEX[r["id"]] = r
-
-# we store all reviews in memory as a dictionary
-# each key is a restaurant id and the value is a list of review dicts
-reviews = {}
-for r in RESTAURANTS:
-    reviews[r["id"]] = []
-
-# list to store restaurants people submit
+RESTAURANT_INDEX = {r["id"]: r for r in RESTAURANTS}
+reviews = {r["id"]: [] for r in RESTAURANTS}
 submissions = []
 
+def get_avg_rating(rid ):
+    rv = reviews.get(rid, [])
+    if not rv: return 0
+    return round(sum(r["rating"] for r in rv) / len(rv), 1)
 
-# helper function to get the average star rating for a restaurant
-def get_avg_rating(rid):
-    rv = reviews[rid]
-    if len(rv) == 0:
-        return 0
-    total = 0
-    for r in rv:
-        total = total + r["rating"]
-    avg = total / len(rv)
-    return round(avg, 1)
-
-
-# this adds avg_rating and review_count to each restaurant in a list
-# we use it a lot so we made it a function
 def add_ratings(restaurant_list):
     result = []
     for r in restaurant_list:
-        r2 = dict(r)  # make a copy so we dont change the original
+        r2 = dict(r)
         r2["avg_rating"] = get_avg_rating(r["id"])
-        r2["review_count"] = len(reviews[r["id"]])
+        r2["review_count"] = len(reviews.get(r["id"], []))
         result.append(r2)
     return result
 
-
-# get saved restaurants from the browser session
 def get_bookmarks():
     return session.get("bookmarks", [])
 
-
-# check if a name is valid
-# syntactic: checks length and format
-# semantic: checks it isnt just numbers
 def check_name(val):
     val = val.strip()
-    if len(val) < 2:
-        return "Name needs to be at least 2 characters"
-    if len(val) > 100:
-        return "Name is too long"
-    if re.search(r"[<>\"'&]", val):
-        return "Name has characters that aren't allowed"
-    if val.isdigit():
-        return "That doesn't look like a real name"
+    if len(val) < 2: return "Name needs to be at least 2 characters"
+    if len(val) > 100: return "Name is too long"
+    if re.search(r"[<>\"'&]", val): return "Name has characters that aren't allowed"
+    if val.isdigit(): return "That doesn't look like a real name"
     return None
 
-
-# check if email looks real
 def check_email(val):
     val = val.strip()
-    # regex to check email format
     if not re.match(r"^[\w\.\+\-]+@[\w\-]+\.[a-zA-Z]{2,}$", val):
         return "Email doesn't look right, try something like name@gmail.com"
-    # reject obviously fake ones
-    fake = ["test@test.com", "fake@fake.com", "a@a.com", "email@email.com"]
-    if val.lower() in fake:
+    if val.lower() in ["test@test.com", "fake@fake.com", "a@a.com", "email@email.com"]:
         return "Please use a real email"
     return None
 
-
-# make sure rating is 1-5
 def check_rating(val):
     try:
         n = int(val)
-        if n < 1 or n > 5:
-            return "Rating has to be between 1 and 5"
-    except:
-        return "Please pick a star rating"
+        if n < 1 or n > 5: return "Rating has to be between 1 and 5"
+    except: return "Please pick a star rating"
     return None
-import random
 
 def make_captcha():
-    """Generates a simple math question and saves the answer in the session."""
-    num1 = random.randint(1, 10)
-    num2 = random.randint(1, 10)
+    num1, num2 = random.randint(1, 10), random.randint(1, 10)
     session["captcha_answer"] = num1 + num2
     return f"{num1} + {num2}"
 
 def check_captcha(val):
-    """Checks if the user's answer matches the one in the session."""
     try:
-        user_answer = int(val)
-        correct_answer = session.get("captcha_answer")
-        if user_answer == correct_answer:
-            return None # No error
+        if int(val) == session.get("captcha_answer"): return None
         return "Incorrect verification answer. Please try again."
-    except (ValueError, TypeError):
-        return "Please enter a valid number for verification."
+    except: return "Please enter a valid number for verification."
 
-# home page
 @app.route("/")
 def home():
-    all_restaurants = add_ratings(RESTAURANTS)
-    return render_template("home.html", restaurants=all_restaurants)
+    return render_template("home.html", restaurants=add_ratings(RESTAURANTS))
 
-
-# browse page - has search, filter, and sort
 @app.route("/browse")
 def browse():
     category = request.args.get("category", "all")
     sort_by = request.args.get("sort", "name")
     search = request.args.get("search", "").strip().lower()
-
-    # filter by category first
-    if category == "all":
-        pool = list(RESTAURANTS)
-    else:
-        pool = []
-        for r in RESTAURANTS:
-            if r["category"] == category:
-                pool.append(r)
-
-    # then filter by search if they typed something
-    # this searches the name, description, and location
+    pool = [r for r in RESTAURANTS if category == "all" or r["category"] == category]
     if search:
-        filtered = []
-        for r in pool:
-            if search in r["name"].lower():
-                filtered.append(r)
-            elif search in r["description"].lower():
-                filtered.append(r)
-            elif search in r["location"].lower():
-                filtered.append(r)
-        pool = filtered
-
-    # add ratings before sorting
+        pool = [r for r in pool if search in r["name"].lower() or search in r["description"].lower() or search in r["location"].lower()]
     pool = add_ratings(pool)
+    if sort_by == "rating": pool.sort(key=lambda x: x["avg_rating"], reverse=True)
+    elif sort_by == "price_low": pool.sort(key=lambda x: len(x["price"]))
+    else: pool.sort(key=lambda x: x["name"].lower())
+    return render_template("browse.html", restaurants=pool, category=category, sort_by=sort_by, search=search, bookmarks=get_bookmarks())
 
-    # sort the list
-    if sort_by == "rating":
-        pool.sort(key=lambda x: x["avg_rating"], reverse=True)
-    elif sort_by == "price_low":
-        pool.sort(key=lambda x: len(x["price"]))
-    else:
-        pool.sort(key=lambda x: x["name"].lower())
-
-    return render_template("browse.html",
-        restaurants=pool,
-        category=category,
-        sort_by=sort_by,
-        search=search,
-        bookmarks=get_bookmarks()
-    )
-
-
-# single restaurant detail page
 @app.route("/restaurant/<rid>")
 def detail(rid):
     restaurant = RESTAURANT_INDEX.get(rid)
     if not restaurant:
         flash("Couldn't find that restaurant!", "error")
         return redirect(url_for("browse"))
+    return render_template("detail.html", restaurant=restaurant, restaurant_reviews=reviews.get(rid, []), avg_rating=get_avg_rating(rid), bookmarks=get_bookmarks(), captcha_question=make_captcha())
 
-    restaurant_reviews = reviews.get(rid, [])
-    avg = get_avg_rating(rid)
-
-    return render_template("detail.html",
-        restaurant=restaurant,
-        restaurant_reviews=restaurant_reviews,
-        avg_rating=avg,
-        bookmarks=get_bookmarks(),
-        captcha_question=make_captcha()                   
-    )
-
-
-# handle review form submission
 @app.route("/review/<rid>", methods=["POST"])
 def submit_review(rid):
-
-    author = request.form.get("author", "").strip()
-    rating = request.form.get("rating", "").strip()
-    comment = request.form.get("comment", "").strip()
-    captcha = request.form.get("captcha", "").strip()
-
-    # collect all errors
-    errors = []
-    e1 = check_name(author)
-    e2 = check_rating(rating)
-    e3 = check_captcha(captcha)
-    if e1:
-        errors.append(e1)
-    if e2:
-        errors.append(e2)
-    if e3:
-        errors.append(e3)    
-    if len(comment) > 400:
-        errors.append("Comment is too long, keep it under 400 characters")
-
-    if len(errors) > 0:
-        for e in errors:
-            flash(e, "error")
+    author, rating, comment, captcha = request.form.get("author", "").strip(), request.form.get("rating", "").strip(), request.form.get("comment", "").strip(), request.form.get("captcha", "").strip()
+    errors = [e for e in [check_name(author), check_rating(rating), check_captcha(captcha)] if e]
+    if len(comment) > 400: errors.append("Comment is too long")
+    if errors:
+        for e in errors: flash(e, "error")
         return redirect(url_for("detail", rid=rid))
-
-    # save the review
-    reviews[rid].append({
-        "author": author,
-        "rating": int(rating),
-        "comment": comment,
-        "date": datetime.now().strftime("%b %d, %Y")
-    })
-
+    reviews[rid].append({"author": author, "rating": int(rating), "comment": comment, "date": datetime.now().strftime("%b %d, %Y")})
     flash("Review posted! Thanks :)", "success")
     return redirect(url_for("detail", rid=rid))
 
-
-# save or unsave a restaurant
 @app.route("/bookmark/<rid>", methods=["POST"])
 def bookmark(rid):
-    if rid not in RESTAURANT_INDEX:
-        flash("Restaurant not found", "error")
-        return redirect(url_for("browse"))
-
+    if rid not in RESTAURANT_INDEX: return redirect(url_for("browse"))
     bmarks = get_bookmarks()
-
-    if rid in bmarks:
-        bmarks.remove(rid)
-        flash("Removed from saved", "info")
-    else:
-        bmarks.append(rid)
-        flash("Saved! ⭐", "success")
-
+    if rid in bmarks: bmarks.remove(rid)
+    else: bmarks.append(rid)
     session["bookmarks"] = bmarks
-    # go back to wherever they were
     return redirect(request.referrer or url_for("browse"))
 
-
-# saved restaurants page
 @app.route("/bookmarks")
 def bookmarks_page():
-    ids = get_bookmarks()
-    saved = []
-    for i in ids:
-        if i in RESTAURANT_INDEX:
-            saved.append(RESTAURANT_INDEX[i])
-    saved = add_ratings(saved)
-    return render_template("bookmarks.html", restaurants=saved)
+    saved = [RESTAURANT_INDEX[i] for i in get_bookmarks() if i in RESTAURANT_INDEX]
+    return render_template("bookmarks.html", restaurants=add_ratings(saved))
 
-
-# deals page
 @app.route("/deals")
 def deals():
     return render_template("deals.html", restaurants=add_ratings(RESTAURANTS))
 
-
-# submit a new restaurant form
 @app.route("/submit", methods=["GET", "POST"])
 def submit():
     if request.method == "POST":
-        
-
-        name = request.form.get("name", "").strip()
-        email = request.form.get("email", "").strip()
-        category = request.form.get("category", "").strip()
-        location = request.form.get("location", "").strip()
-        description = request.form.get("description", "").strip()
-        captcha = request.form.get("captcha", "").strip()
-
-        # validate everything
-        errors = []
-        e1 = check_name(name)
-        e2 = check_email(email)
-        e3 = check_captcha(captcha)
-        if e1:
-            errors.append(e1)
-        if e2:
-            errors.append(e2)
-        if e3:
-            errors.append(e3)
-        if not category:
-            errors.append("Please pick a category")
-        if len(location) < 3:
-            errors.append("Please enter a location")
-        if len(description) > 500:
-            errors.append("Description is too long (max 500 characters)")
-
-        if len(errors) > 0:
-            for e in errors:
-                flash(e, "error")
-                        return render_template("submit.html", form_data=request.form, captcha_question=make_captcha())
-        # ...
-    return render_template("submit.html", form_data={}, captcha_question=make_captcha())
-
-        # save submission
-        submissions.append({
-            "name": name,
-            "email": email,
-            "category": category,
-            "location": location,
-            "description": description,
-            "date": datetime.now().strftime("%b %d, %Y")
-        })
-
+        name, email, category, location, description, captcha = request.form.get("name", "").strip(), request.form.get("email", "").strip(), request.form.get("category", "").strip(), request.form.get("location", "").strip(), request.form.get("description", "").strip(), request.form.get("captcha", "").strip()
+        errors = [e for e in [check_name(name), check_email(email), check_captcha(captcha)] if e]
+        if not category: errors.append("Please pick a category")
+        if len(location) < 3: errors.append("Please enter a location")
+        if errors:
+            for e in errors: flash(e, "error")
+            return render_template("submit.html", form_data=request.form, captcha_question=make_captcha())
+        submissions.append({"name": name, "email": email, "category": category, "location": location, "description": description, "date": datetime.now().strftime("%b %d, %Y")})
         flash("Thanks! We got your submission :)", "success")
         return redirect(url_for("submit"))
+    return render_template("submit.html", form_data={}, captcha_question=make_captcha())
 
-    return render_template("submit.html", form_data={})
-
-
-# about page
 @app.route("/about")
-def about():
-    return render_template("about.html")
+def about(): return render_template("about.html")
 
-
-# sources page
 @app.route("/sources")
-def sources():
-    return render_template("sources.html")
+def sources(): return render_template("sources.html")
 
-
-# report page with stats
 @app.route("/report")
 def report():
-    # count how many restaurants are in each category
     category_counts = {}
-    for r in RESTAURANTS:
-        cat = r["category"]
-        if cat in category_counts:
-            category_counts[cat] += 1
-        else:
-            category_counts[cat] = 1
-
-    # get top rated (only ones with at least one review)
-    all_rated = add_ratings(RESTAURANTS)
-    with_reviews = []
-    for r in all_rated:
-        if r["review_count"] > 0:
-            with_reviews.append(r)
-    with_reviews.sort(key=lambda x: x["avg_rating"], reverse=True)
-
-    total_reviews = 0
-    for v in reviews.values():
-        total_reviews += len(v)
-
-    return render_template("report.html",
-        category_counts=category_counts,
-        top_restaurants=with_reviews[:5],
-        total_reviews=total_reviews,
-        submissions=submissions,
-        total_restaurants=len(RESTAURANTS)
-    )
-
+    for r in RESTAURANTS: category_counts[r["category"]] = category_counts.get(r["category"], 0) + 1
+    all_rated = [r for r in add_ratings(RESTAURANTS) if r["review_count"] > 0]
+    all_rated.sort(key=lambda x: x["avg_rating"], reverse=True)
+    return render_template("report.html", category_counts=category_counts, top_restaurants=all_rated[:5], total_reviews=sum(len(v) for v in reviews.values()), submissions=submissions, total_restaurants=len(RESTAURANTS))
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
