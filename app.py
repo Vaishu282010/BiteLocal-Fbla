@@ -292,7 +292,7 @@ def check_captcha(val):
 
 @app.route("/")
 def home():
-    return render_template("home.html", restaurants=add_ratings(RESTAURANTS))
+    return render_template("index.html", restaurants=add_ratings(RESTAURANTS))
 
 @app.route("/browse")
 def browse():
