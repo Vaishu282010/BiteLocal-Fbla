@@ -3,7 +3,6 @@
 
 {% block content %}
 
-<!-- hero banner -->
 <section class="hero">
     <h2>Find the Best  
 Local Restaurants 🍕</h2>
@@ -19,7 +18,6 @@ Local Restaurants 🍕</h2>
     </div>
 </section>
 
-<!-- deals slideshow -->
 <section class="deals-section">
     <h2>🏷️ Hot Deals Right Now</h2>
     <p>Click any deal to go to that restaurant and claim it!</p>
@@ -59,7 +57,6 @@ Local Restaurants 🍕</h2>
     </div>
 </section>
 
-<!-- browse by food type -->
 <section class="categories-section">
     <h2>Browse by Food Type</h2>
     <div class="cat-buttons">
@@ -81,7 +78,6 @@ Local Restaurants 🍕</h2>
     </div>
 </section>
 
-<!-- features overview -->
 <section class="features-section">
     <h2>What You Can Do</h2>
     <div class="features-grid">
@@ -106,6 +102,29 @@ Local Restaurants 🍕</h2>
     </div>
 </section>
 
+<style>
+  .slides-track {
+    display: flex !important;
+    width: max-content !important;
+    gap: 18px !important;
+  }
+  .slide {
+    width: 320px !important;
+    min-height: 380px !important;
+    background: #cc2200 !important; 
+    display: block !important;
+    flex-shrink: 0 !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+  }
+  .slide img {
+    width: 100% !important;
+    height: 180px !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+</style>
+
 <script>
     let current = 0;
     const track = document.getElementById("track");
@@ -118,14 +137,14 @@ Local Restaurants 🍕</h2>
     }
 
     function maxSlide() {
-        let total = track.children.length; // Fixed 'length'
+        let total = track.children.length; 
         let show = visible();
         return Math.max(0, total - show);
     }
 
     function updateTrack() {
         if (track.children.length === 0) return;
-        current = Math.min(current, maxSlide()); // Fixed 'maxSlide'
+        current = Math.min(current, maxSlide()); 
         let slideW = track.children[0].offsetWidth + 18;
         track.style.transform = "translateX(-" + (current * slideW) + "px)";
         dots.forEach(function(d, i) {
@@ -151,10 +170,11 @@ Local Restaurants 🍕</h2>
     }
 
     let slideInterval = setInterval(nextSlide, 3000);
-    track.parentElement.addEventListener('mouseenter', () => clearInterval(slideInterval)); // Fixed 'addEventListener'
-    track.parentElement.addEventListener('mouseleave', () => slideInterval = setInterval(nextSlide, 3000)); // Fixed 'addEventListener'
+    track.parentElement.addEventListener('mouseenter', () => clearInterval(slideInterval)); 
+    track.parentElement.addEventListener('mouseleave', () => slideInterval = setInterval(nextSlide, 3000)); 
     window.addEventListener("resize", updateTrack);
 
     updateTrack(); 
     window.addEventListener("load", updateTrack);
 </script>
+{% endblock %}
