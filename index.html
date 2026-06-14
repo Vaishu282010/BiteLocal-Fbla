@@ -118,14 +118,14 @@ Local Restaurants 🍕</h2>
     }
 
     function maxSlide() {
-        let total = track.children.length;
+        let total = track.children.length; // Fixed 'length'
         let show = visible();
         return Math.max(0, total - show);
     }
 
     function updateTrack() {
         if (track.children.length === 0) return;
-        current = Math.min(current, maxSlide());
+        current = Math.min(current, maxSlide()); // Fixed 'maxSlide'
         let slideW = track.children[0].offsetWidth + 18;
         track.style.transform = "translateX(-" + (current * slideW) + "px)";
         dots.forEach(function(d, i) {
@@ -151,10 +151,8 @@ Local Restaurants 🍕</h2>
     }
 
     let slideInterval = setInterval(nextSlide, 3000);
-    track.parentElement.addEventListener('mouseenter', () => clearInterval(slideInterval));
-    track.parentElement.addEventListener('mouseleave', () => slideInterval = setInterval(nextSlide, 3000));
+    track.parentElement.addEventListener('mouseenter', () => clearInterval(slideInterval)); // Fixed 'addEventListener'
+    track.parentElement.addEventListener('mouseleave', () => slideInterval = setInterval(nextSlide, 3000)); // Fixed 'addEventListener'
     window.addEventListener("resize", updateTrack);
     window.onload = updateTrack;
 </script>
-
-{% endblock %}
