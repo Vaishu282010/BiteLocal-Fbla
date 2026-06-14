@@ -18,15 +18,15 @@ Local Restaurants 🍕</h2>
     </div>
 </section>
 
-<section class="deals-section" style="padding: 40px 20px !important; background: #1a1a1a !important;">
-    <h2 style="color: #ffffff !important; text-align: center !important;">🏷️ Hot Deals Right Now</h2>
-    <p style="color: #cccccc !important; text-align: center !important;">Click any deal to go to that restaurant and claim it!</p>
+<section class="deals-section" style="padding: 40px 10px !important; background: #1a1a1a !important; display: block !important; clear: both !important;">
+    <h2 style="color: #ffffff !important; text-align: center !important; display: block !important;">🏷️ Hot Deals Right Now</h2>
+    <p style="color: #cccccc !important; text-align: center !important; display: block !important; margin-bottom: 30px !important;">Click any deal to go to that restaurant and claim it!</p>
 
-    <div class="slideshow-container" style="max-width: 1200px !important; margin: 0 auto !important; overflow: visible !important;">
+    <div class="slideshow-container" style="max-width: 1200px !important; margin: 0 auto !important; overflow: visible !important; display: block !important; height: auto !important;">
         <div class="slides-track" id="track">
             {% for r in restaurants %}
             <div class="slide {{ r.category }}">
-                <a href="{{ url_for('detail', rid=r.id) }}" style="text-decoration: none !important; display: block !important;">
+                <a href="{{ url_for('detail', rid=r.id) }}" style="text-decoration: none !important; display: block !important; height: auto !important;">
                     <div class="slide-body">
                         <span class="slide-badge">{{ r.category|title }}</span>
                         <h3>{{ r.name }}</h3>
@@ -41,7 +41,7 @@ Local Restaurants 🍕</h2>
         </div>
     </div>
 
-    <div style="text-align:center; margin-top:40px;">
+    <div style="text-align:center; margin-top:40px; display: block !important; clear: both !important;">
         <a href="{{ url_for('deals') }}" class="btn btn-red">View All {{ restaurants|length }} Deals</a>
     </div>
 </section>
@@ -92,41 +92,56 @@ Local Restaurants 🍕</h2>
 </section>
 
 <style>
-  /* Completely hide all old carousel buttons and pagination elements */
+  /* Wipe out old layout buttons completely */
   .arrow-btn, .slide-dots {
     display: none !important;
   }
   
-  /* Creates a high-visibility responsive card grid structure */
+  /* Forces a direct, visible grid architecture */
   .slides-track {
     display: grid !important;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
     gap: 24px !important;
     width: 100% !important;
+    height: auto !important;
     transform: none !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
   
-  /* Card item style block with safe text visibility fallbacks */
+  /* Strips all slider properties from the cards and locks visibility */
   .slide {
     width: 100% !important;
+    height: auto !important;
+    min-height: 250px !important;
     box-sizing: border-box !important;
     background: #2d2d2d !important; 
-    border: 2px solid #ff4444 !important;
+    border: 3px solid #ff4444 !important;
     display: block !important;
     border-radius: 12px !important;
     padding: 20px !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    float: none !important;
+    position: relative !important;
   }
   
-  /* Hide the image completely for this debugging render pass */
+  /* Temporarily turn off image elements completely to guarantee text layout loads */
   .slide img {
     display: none !important;
   }
 
-  /* Strict text color definitions to make sure cards aren't rendering black text on black background */
+  /* Force plain text styling colors to contrast against dark backgrounds */
+  .slide-body {
+    display: block !important;
+    height: auto !important;
+  }
+
   .slide-body h3 {
     color: #ffffff !important;
     margin: 10px 0 !important;
-    font-size: 20px !important;
+    font-size: 22px !important;
+    display: block !important;
   }
 
   .slide-badge {
@@ -143,32 +158,36 @@ Local Restaurants 🍕</h2>
     color: #ffcc00 !important;
     font-weight: bold !important;
     margin: 8px 0 !important;
+    font-size: 16px !important;
+    display: block !important;
   }
 
   .slide-code {
     color: #ffffff !important;
     font-size: 14px !important;
     margin-bottom: 8px !important;
+    display: block !important;
   }
 
   .slide-loc {
     color: #aaaaaa !important;
     font-size: 13px !important;
+    display: block !important;
   }
 
   .slide-cta {
     color: #ff4444 !important;
     display: inline-block !important;
-    margin-top: 10px !important;
+    margin-top: 12px !important;
     font-weight: bold !important;
   }
 </style>
 
 <script>
-    // Cleared slider script dependencies to prevent execution loop conflicts
-    const track = document.getElementById("track");
-    if (track) {
-        track.style.transform = "none";
+    // Completely detaches all older transformation layout variables 
+    const fallbackTrack = document.getElementById("track");
+    if (fallbackTrack) {
+        fallbackTrack.style.transform = "none";
     }
 </script>
 {% endblock %}
