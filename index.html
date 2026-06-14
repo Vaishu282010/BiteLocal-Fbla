@@ -18,18 +18,15 @@ Local Restaurants 🍕</h2>
     </div>
 </section>
 
-<section class="deals-section">
-    <h2>🏷️ Hot Deals Right Now</h2>
-    <p>Click any deal to go to that restaurant and claim it!</p>
+<section class="deals-section" style="padding: 40px 20px !important; background: #1a1a1a !important;">
+    <h2 style="color: #ffffff !important; text-align: center !important;">🏷️ Hot Deals Right Now</h2>
+    <p style="color: #cccccc !important; text-align: center !important;">Click any deal to go to that restaurant and claim it!</p>
 
-    <div class="slideshow-container">
-        <button class="arrow-btn" onclick="prevSlide()">&#8249;</button>
-
+    <div class="slideshow-container" style="max-width: 1200px !important; margin: 0 auto !important; overflow: visible !important;">
         <div class="slides-track" id="track">
             {% for r in restaurants %}
             <div class="slide {{ r.category }}">
-                <a href="{{ url_for('detail', rid=r.id) }}">
-                    <img src="{{ r.img }}" alt="{{ r.name }}">
+                <a href="{{ url_for('detail', rid=r.id) }}" style="text-decoration: none !important; display: block !important;">
                     <div class="slide-body">
                         <span class="slide-badge">{{ r.category|title }}</span>
                         <h3>{{ r.name }}</h3>
@@ -42,17 +39,9 @@ Local Restaurants 🍕</h2>
             </div>
             {% endfor %}
         </div>
-
-        <button class="arrow-btn" onclick="nextSlide()">&#8250;</button>
     </div>
 
-    <div class="slide-dots" id="dots">
-        {% for r in restaurants %}
-        <button class="dot {{ 'on' if loop.first else '' }}" onclick="goTo({{ loop.index0 }})"></button>
-        {% endfor %}
-    </div>
-
-    <div style="text-align:center; margin-top:22px;">
+    <div style="text-align:center; margin-top:40px;">
         <a href="{{ url_for('deals') }}" class="btn btn-red">View All {{ restaurants|length }} Deals</a>
     </div>
 </section>
@@ -103,90 +92,83 @@ Local Restaurants 🍕</h2>
 </section>
 
 <style>
-  /* Hides old slider assets */
+  /* Completely hide all old carousel buttons and pagination elements */
   .arrow-btn, .slide-dots {
     display: none !important;
   }
   
-  /* Creates a grid layout that stacks cards cleanly */
+  /* Creates a high-visibility responsive card grid structure */
   .slides-track {
     display: grid !important;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
-    gap: 20px !important;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+    gap: 24px !important;
     width: 100% !important;
-    transform: none !important; /* Disables javascript slider shifts */
+    transform: none !important;
   }
   
-  /* Ensures each individual card fits nicely */
+  /* Card item style block with safe text visibility fallbacks */
   .slide {
     width: 100% !important;
-    min-height: 380px !important;
-    background: #cc2200 !important; 
+    box-sizing: border-box !important;
+    background: #2d2d2d !important; 
+    border: 2px solid #ff4444 !important;
     display: block !important;
     border-radius: 12px !important;
-    overflow: hidden !important;
+    padding: 20px !important;
   }
   
+  /* Hide the image completely for this debugging render pass */
   .slide img {
-    width: 100% !important;
-    height: 180px !important;
-    object-fit: cover !important;
-    display: block !important;
+    display: none !important;
+  }
+
+  /* Strict text color definitions to make sure cards aren't rendering black text on black background */
+  .slide-body h3 {
+    color: #ffffff !important;
+    margin: 10px 0 !important;
+    font-size: 20px !important;
+  }
+
+  .slide-badge {
+    background: #ff4444 !important;
+    color: #ffffff !important;
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+    font-size: 12px !important;
+    text-transform: uppercase !important;
+    display: inline-block !important;
+  }
+
+  .slide-deal {
+    color: #ffcc00 !important;
+    font-weight: bold !important;
+    margin: 8px 0 !important;
+  }
+
+  .slide-code {
+    color: #ffffff !important;
+    font-size: 14px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .slide-loc {
+    color: #aaaaaa !important;
+    font-size: 13px !important;
+  }
+
+  .slide-cta {
+    color: #ff4444 !important;
+    display: inline-block !important;
+    margin-top: 10px !important;
+    font-weight: bold !important;
   }
 </style>
 
 <script>
-    let current = 0;
+    // Cleared slider script dependencies to prevent execution loop conflicts
     const track = document.getElementById("track");
-    const dots = document.querySelectorAll(".dot");
-
-    function visible() {
-        if (window.innerWidth < 600) return 1;
-        if (window.innerWidth < 860) return 2;
-        return 3;
+    if (track) {
+        track.style.transform = "none";
     }
-
-    function maxSlide() {
-        let total = track.children.length; 
-        let show = visible();
-        return Math.max(0, total - show);
-    }
-
-    function updateTrack() {
-        if (track.children.length === 0) return;
-        current = Math.min(current, maxSlide()); 
-        let slideW = track.children[0].offsetWidth + 18;
-        // Disabled transformation logic for the grid look
-        // track.style.transform = "translateX(-" + (current * slideW) + "px)";
-        dots.forEach(function(d, i) {
-            d.classList.toggle("on", i === current);
-        });
-    }
-
-    function nextSlide() {
-        if (current < maxSlide()) { current++; } 
-        else { current = 0; }
-        updateTrack();
-    }
-
-    function prevSlide() {
-        if (current > 0) { current--; } 
-        else { current = maxSlide(); }
-        updateTrack();
-    }
-
-    function goTo(n) {
-        current = Math.min(n, maxSlide());
-        updateTrack();
-    }
-
-    // Interval disabled to stop page jumping while looking at the grid
-    // let slideInterval = setInterval(nextSlide, 3000);
-    // track.parentElement.addEventListener('mouseenter', () => clearInterval(slideInterval)); 
-    // track.parentElement.addEventListener('mouseleave', () => slideInterval = setInterval(nextSlide, 3000)); 
-    window.addEventListener("resize", updateTrack);
-
-    updateTrack(); 
-    window.addEventListener("load", updateTrack);
 </script>
 {% endblock %}
