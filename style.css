@@ -190,7 +190,12 @@ nav a.active { background: rgba(255,255,255,0.35); }
     overflow: hidden;
 }
 
-.slide { min-width: calc(33.333% - 12px); flex-shrink: 0; }
+.slide { 
+    min-width: calc(33.333% - 12px); 
+    max-width: calc(33.333% - 12px); 
+    flex-shrink: 0; 
+}
+
 
 .slide a {
     display: block;
@@ -942,4 +947,17 @@ footer {
     .hero-numbers { gap: 20px; }
     .form-row { flex-direction: column; }
     .hero h2 { font-size: 2rem; }
+}
+
+@media (max-width: 860px) {
+    .slide { 
+        min-width: calc(50% - 9px); 
+        max-width: calc(50% - 9px); 
+    }
+}
+@media (max-width: 600px) {
+    .slide { 
+        min-width: 100%; 
+        max-width: 100%; 
+    }
 }
