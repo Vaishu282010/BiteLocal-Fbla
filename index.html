@@ -5,7 +5,8 @@
 
 <!-- hero banner -->
 <section class="hero">
-    <h2>Find the Best<br>Local Restaurants 🍕</h2>
+    <h2>Find the Best  
+Local Restaurants 🍕</h2>
     <p>Discover local spots, read real reviews, save your favorites, and find deals at restaurants in Louisville KY.</p>
     <div class="hero-buttons">
         <a href="{{ url_for('browse') }}" class="btn btn-white">Browse Restaurants</a>
@@ -47,7 +48,6 @@
         <button class="arrow-btn" onclick="nextSlide()">&#8250;</button>
     </div>
 
-    <!-- dots to jump to slides -->
     <div class="slide-dots" id="dots">
         {% for r in restaurants %}
         <button class="dot {{ 'on' if loop.first else '' }}" onclick="goTo({{ loop.index0 }})"></button>
@@ -106,13 +106,11 @@
     </div>
 </section>
 
-<!-- slideshow javascript -->
 <script>
     let current = 0;
     const track = document.getElementById("track");
     const dots = document.querySelectorAll(".dot");
 
-    // figure out how many slides are visible at once
     function visible() {
         if (window.innerWidth < 600) return 1;
         if (window.innerWidth < 860) return 2;
@@ -120,41 +118,30 @@
     }
 
     function maxSlide() {
-        let total = track.children.lenght;
+        let total = track.children.length;
         let show = visible();
         return Math.max(0, total - show);
-        
     }
 
     function updateTrack() {
         if (track.children.length === 0) return;
-
-        current = Math.min(current, maxslide());
-        
+        current = Math.min(current, maxSlide());
         let slideW = track.children[0].offsetWidth + 18;
         track.style.transform = "translateX(-" + (current * slideW) + "px)";
-
-        // update which dot is active
         dots.forEach(function(d, i) {
             d.classList.toggle("on", i === current);
         });
     }
 
     function nextSlide() {
-        if (current < maxSlide()) {
-            current++;
-        } else {
-            current = 0; // go back to start
-        }
+        if (current < maxSlide()) { current++; } 
+        else { current = 0; }
         updateTrack();
     }
 
     function prevSlide() {
-        if (current > 0) {
-            current--;
-        } else {
-            current = maxSlide();
-        }
+        if (current > 0) { current--; } 
+        else { current = maxSlide(); }
         updateTrack();
     }
 
@@ -163,15 +150,10 @@
         updateTrack();
     }
 
-    // auto play every 3 seconds
-   let slideInterval = setInterval(nextSlide, 3000);
-
-    track.parentElement.addEventlistener('mouseenter',() => clearInterval(slideInterval));
-        track.parentElement.addEventlistener('mouseenter',() =>slideInterval = setInterval(nextSlide, 3000));
-    
-
+    let slideInterval = setInterval(nextSlide, 3000);
+    track.parentElement.addEventListener('mouseenter', () => clearInterval(slideInterval));
+    track.parentElement.addEventListener('mouseleave', () => slideInterval = setInterval(nextSlide, 3000));
     window.addEventListener("resize", updateTrack);
-
     window.onload = updateTrack;
 </script>
 
