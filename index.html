@@ -103,20 +103,30 @@ Local Restaurants 🍕</h2>
 </section>
 
 <style>
-  .slides-track {
-    display: flex !important;
-    width: max-content !important;
-    gap: 18px !important;
+  /* Hides old slider assets */
+  .arrow-btn, .slide-dots {
+    display: none !important;
   }
+  
+  /* Creates a grid layout that stacks cards cleanly */
+  .slides-track {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
+    gap: 20px !important;
+    width: 100% !important;
+    transform: none !important; /* Disables javascript slider shifts */
+  }
+  
+  /* Ensures each individual card fits nicely */
   .slide {
-    width: 320px !important;
+    width: 100% !important;
     min-height: 380px !important;
     background: #cc2200 !important; 
     display: block !important;
-    flex-shrink: 0 !important;
     border-radius: 12px !important;
     overflow: hidden !important;
   }
+  
   .slide img {
     width: 100% !important;
     height: 180px !important;
@@ -146,7 +156,8 @@ Local Restaurants 🍕</h2>
         if (track.children.length === 0) return;
         current = Math.min(current, maxSlide()); 
         let slideW = track.children[0].offsetWidth + 18;
-        track.style.transform = "translateX(-" + (current * slideW) + "px)";
+        // Disabled transformation logic for the grid look
+        // track.style.transform = "translateX(-" + (current * slideW) + "px)";
         dots.forEach(function(d, i) {
             d.classList.toggle("on", i === current);
         });
@@ -169,9 +180,10 @@ Local Restaurants 🍕</h2>
         updateTrack();
     }
 
-    let slideInterval = setInterval(nextSlide, 3000);
-    track.parentElement.addEventListener('mouseenter', () => clearInterval(slideInterval)); 
-    track.parentElement.addEventListener('mouseleave', () => slideInterval = setInterval(nextSlide, 3000)); 
+    // Interval disabled to stop page jumping while looking at the grid
+    // let slideInterval = setInterval(nextSlide, 3000);
+    // track.parentElement.addEventListener('mouseenter', () => clearInterval(slideInterval)); 
+    // track.parentElement.addEventListener('mouseleave', () => slideInterval = setInterval(nextSlide, 3000)); 
     window.addEventListener("resize", updateTrack);
 
     updateTrack(); 
