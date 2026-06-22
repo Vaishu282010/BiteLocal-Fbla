@@ -132,7 +132,7 @@ We validate all user input before saving it. We check both:
 - How Flask sessions work for storing user data like bookmarks
 - How to validate form input
 - How to use CSS and grid for layouts
-- How honeypot fields work for bot prevention
+- How to use Captcha for bot prevention
 - How to use Python dictionaries for fast lookups
 
 ---
